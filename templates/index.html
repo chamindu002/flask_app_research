@@ -13,11 +13,16 @@
 .hero-stats { display:flex; gap:28px; flex-wrap:wrap; margin-top:32px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); }
 .hero-stat .v { color:#fff; font-size:1.6rem; font-weight:800; }
 .hero-stat .l { color:rgba(255,255,255,.45); font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
-.hero-feed { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; }
-.feed-hdr { font-size:.75rem; color:rgba(255,255,255,.4); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:12px; }
-.feed-row { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; margin-bottom:6px; background:rgba(255,255,255,.03); font-size:.86rem; color:rgba(255,255,255,.75); }
-.feed-row:last-of-type { margin-bottom:0; }
-.dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* Schedule panel replacing live feed */
+.schedule-panel { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; }
+.sch-hdr { font-size:.75rem; color:rgba(255,255,255,.4); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:14px; }
+.sch-slot { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; margin-bottom:8px; background:rgba(255,255,255,.04); }
+.sch-slot:last-of-type { margin-bottom:0; }
+.sch-time { font-size:1rem; font-weight:800; color:#fff; width:52px; flex-shrink:0; }
+.sch-desc { font-size:.85rem; color:rgba(255,255,255,.65); flex:1; }
+.sch-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
 .quick-card { border-radius:var(--ua-radius); padding:24px; text-align:center; text-decoration:none; display:block; transition:transform .15s, box-shadow .15s; height:100%; color:var(--ua-text); }
 .quick-card:hover { transform:translateY(-3px); box-shadow:var(--ua-shadow-lg); color:var(--ua-text); }
 .qc-icon { width:48px; height:48px; border-radius:12px; margin:0 auto 14px; display:grid; place-items:center; font-size:1.3rem; }
@@ -69,16 +74,28 @@
             </div>
         </div>
         <div class="col-lg-5 offset-lg-1 mt-4 mt-lg-0" style="position:relative;z-index:1;">
-            <div class="hero-feed">
-                <div class="feed-hdr"><i class="bi bi-activity me-1" style="color:var(--ua-orange);"></i>Live Screening Feed</div>
-                <div class="feed-row"><span class="dot" style="background:var(--c-hit);"></span><span style="flex:1;">Amir Hassan Al-Rashidi</span><span class="ua-badge badge-hit">HIT</span></div>
-                <div class="feed-row"><span class="dot" style="background:var(--c-review);"></span><span style="flex:1;">Priya Nair Subramaniam</span><span class="ua-badge badge-review">REVIEW</span></div>
-                <div class="feed-row"><span class="dot" style="background:var(--c-face);"></span><span style="flex:1;">Mohamed Farouq</span><span class="ua-badge badge-face-hit">FACE HIT</span></div>
-                <div class="feed-row"><span class="dot" style="background:var(--c-clear);"></span><span style="flex:1;">Nimal Perera</span><span class="ua-badge badge-clear">CLEAR</span></div>
-                <div class="feed-row"><span class="dot" style="background:var(--c-clear);"></span><span style="flex:1;">Sanduni Jayawardena</span><span class="ua-badge badge-clear">CLEAR</span></div>
-                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;">
-                    <span style="font-size:.78rem;color:rgba(255,255,255,.35);">Updated 3s ago</span>
-                    <a href="/reports" style="font-size:.78rem;color:var(--ua-orange);text-decoration:none;font-weight:600;">View all →</a>
+            <div class="schedule-panel">
+                <div class="sch-hdr"><i class="bi bi-clock-history me-1" style="color:var(--ua-orange);"></i>Report Generation Schedule</div>
+
+                <div class="sch-slot">
+                    <span class="sch-dot" style="background:var(--ua-orange);"></span>
+                    <span class="sch-time">8:00 AM</span>
+                    <span class="sch-desc">Morning batch — all submissions since yesterday 3 PM are processed and reports updated.</span>
+                </div>
+                <div class="sch-slot">
+                    <span class="sch-dot" style="background:var(--c-info);"></span>
+                    <span class="sch-time">3:00 PM</span>
+                    <span class="sch-desc">Afternoon batch — all submissions since 8 AM are processed and reports updated.</span>
+                </div>
+
+                <div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06);">
+                    <div style="font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:6px;"><i class="bi bi-info-circle me-1"></i>How it works</div>
+                    <div style="font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.6;">Submit customer details at any time. Our screening engine processes submissions in two daily batches. The Reports dashboard reflects the most recent completed batch.</div>
+                </div>
+
+                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:.78rem;color:rgba(255,255,255,.35);"><i class="bi bi-calendar3 me-1"></i>Next run: <strong style="color:rgba(255,255,255,.55);" id="nextRun">—</strong></span>
+                    <a href="/reports" style="font-size:.78rem;color:var(--ua-orange);text-decoration:none;font-weight:600;">View reports →</a>
                 </div>
             </div>
         </div>
@@ -91,7 +108,7 @@
         <a href="/submit" class="ua-card quick-card">
             <div class="qc-icon" style="background:var(--ua-orange-glow);color:var(--ua-orange);"><i class="bi bi-person-plus-fill"></i></div>
             <h6 style="font-weight:700;font-size:1rem;">Submit Customer</h6>
-            <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Run an instant AML/CFT sanction check with face matching.</p>
+            <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Run an AML/CFT sanction check — processed in the next scheduled batch.</p>
             <div style="margin-top:12px;font-size:.85rem;color:var(--ua-orange);font-weight:600;">Start screening →</div>
         </a>
     </div>
@@ -142,7 +159,7 @@
         <div class="ua-card p-4 h-100">
             <div style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;"><i class="bi bi-diagram-3 me-1"></i>Workflow</div>
             <h5 style="font-weight:800;font-size:1.15rem;margin-bottom:20px;">How it works</h5>
-            {% for n, t, d in [('1','Submit Details','Enter name, NIC, nationality, DOB and upload a face photo.'),('2','AI Screening','Fuzzy name matching, facial recognition & attribute cross-checking.'),('3','Risk Scoring','Signals combined into a single score: HIT, REVIEW or CLEAR.'),('4','Review & Act','View the report, review evidence, take compliance action.')] %}
+            {% for n, t, d in [('1','Submit Details','Enter name, NIC, nationality, DOB and upload a face photo.'),('2','Queued for Batch','Submission is stored securely and queued for the next batch run (8 AM or 3 PM).'),('3','AI Screening','Fuzzy name matching, facial recognition & attribute cross-checking runs at batch time.'),('4','Review & Act','Reports update automatically — view risk scores and take compliance action.')] %}
             <div class="step-row">
                 <div class="step-num">{{ n }}</div>
                 <div style="padding-top:6px;">
@@ -178,4 +195,26 @@
     {% if not loop.last %}<div style="width:1px;height:36px;background:var(--ua-border);" class="d-none d-md-block"></div>{% endif %}
     {% endfor %}
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Compute next scheduled batch run (08:00 or 15:00 Sri Lanka time)
+(function(){
+    const now = new Date();
+    // Use Asia/Colombo UTC+5:30
+    const slTime = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Colombo'}));
+    const h = slTime.getHours(), m = slTime.getMinutes();
+    let label = '';
+    if(h < 8 || (h === 8 && m === 0)){
+        label = 'Today 8:00 AM';
+    } else if(h < 15 || (h === 15 && m === 0)){
+        label = 'Today 3:00 PM';
+    } else {
+        label = 'Tomorrow 8:00 AM';
+    }
+    const el = document.getElementById('nextRun');
+    if(el) el.textContent = label;
+})();
+</script>
 {% endblock %}

@@ -104,7 +104,19 @@ def api_reports():
             query = query.ilike("customer_name", f"%{search}%")
 
         result = query.execute()
-        return jsonify({"data": result.data, "count": len(result.data)})
+
+        # Derive last_batch_time from the most recent screened_at
+        last_batch_time = None
+        if result.data:
+            times = [r.get("screened_at") for r in result.data if r.get("screened_at")]
+            if times:
+                last_batch_time = max(times)
+
+        return jsonify({
+            "data": result.data,
+            "count": len(result.data),
+            "last_batch_time": last_batch_time
+        })
     except Exception as e:
         return jsonify({"error": str(e), "data": [], "count": 0}), 500
 

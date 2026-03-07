@@ -18,19 +18,34 @@
 .info-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
 .info-row:last-child { margin:0; }
 .info-icon { width:30px; height:30px; border-radius:8px; background:var(--ua-orange-glow); display:grid; place-items:center; color:var(--ua-orange); flex-shrink:0; font-size:.85rem; }
+.batch-notice { background:linear-gradient(135deg,#F0F4FF,var(--ua-bg)); border:1.5px solid var(--ua-border); border-left:4px solid var(--ua-orange); border-radius:var(--ua-radius); padding:14px 16px; }
+.batch-slot { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:7px; margin-bottom:6px; border:1px solid var(--ua-border); background:#fff; }
+.batch-slot:last-child { margin-bottom:0; }
+.bs-time { font-size:.95rem; font-weight:800; color:var(--ua-navy); width:56px; flex-shrink:0; }
+.bs-desc { font-size:.82rem; color:var(--ua-text-2); flex:1; }
+.bs-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-hdr">
     <div class="page-hdr-icon"><i class="bi bi-person-plus-fill"></i></div>
-    <div style="z-index:1;"><h4>Submit Customer for Screening</h4><p>Enter details to run a real-time AML/CFT risk check</p></div>
+    <div style="z-index:1;"><h4>Submit Customer for Screening</h4><p>Details are stored securely and processed in the next scheduled batch run</p></div>
 </div>
 
 <div class="row g-4">
     <!-- Form -->
     <div class="col-lg-8">
         <div class="ua-card p-4">
+            <!-- Batch info banner inside form area -->
+            <div class="batch-notice mb-4 d-flex align-items-start gap-3">
+                <i class="bi bi-clock-fill" style="color:var(--ua-orange);font-size:1.1rem;margin-top:2px;flex-shrink:0;"></i>
+                <div>
+                    <div style="font-weight:700;font-size:.9rem;color:var(--ua-text);margin-bottom:2px;">Submissions are processed twice daily</div>
+                    <div style="font-size:.85rem;color:var(--ua-text-2);line-height:1.6;">Your submission will be stored and included in the <strong>next batch run at 8:00 AM or 3:00 PM</strong>. Results will appear in the Reports dashboard after the batch completes.</div>
+                </div>
+            </div>
+
             <form method="POST" enctype="multipart/form-data">
                 <div class="section-label"><i class="bi bi-person me-1"></i>Personal Information</div>
                 <div class="row g-3 mb-4">
@@ -90,17 +105,41 @@
 
     <!-- Sidebar -->
     <div class="col-lg-4">
+        <!-- Batch Schedule Card -->
+        <div class="ua-card p-4 mb-3">
+            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-calendar-check-fill me-1" style="color:var(--ua-orange);"></i>Batch Schedule</h6>
+            <div class="batch-slot">
+                <span class="bs-dot" style="background:var(--ua-orange);"></span>
+                <span class="bs-time">8:00 AM</span>
+                <span class="bs-desc">Morning run — submissions since previous 3 PM</span>
+            </div>
+            <div class="batch-slot mt-2">
+                <span class="bs-dot" style="background:var(--c-info);"></span>
+                <span class="bs-time">3:00 PM</span>
+                <span class="bs-desc">Afternoon run — submissions since 8 AM</span>
+            </div>
+            <div style="margin-top:12px;font-size:.8rem;color:var(--ua-muted);line-height:1.6;padding:10px;background:var(--ua-bg);border-radius:8px;border:1px solid var(--ua-border);">
+                <i class="bi bi-info-circle me-1"></i>Reports update automatically after each batch. You do not need to stay on this page.
+            </div>
+            <div style="margin-top:10px;font-size:.82rem;color:var(--ua-text-2);font-weight:500;">
+                <i class="bi bi-arrow-right-circle me-1" style="color:var(--ua-orange);"></i>Next batch: <strong id="nextBatch">—</strong>
+            </div>
+        </div>
+
+        <!-- How It Works -->
         <div class="ua-card p-4 mb-3">
             <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-info-circle-fill me-1" style="color:var(--ua-orange);"></i>How It Works</h6>
             <div class="info-block">
-                {% for icon, title, desc in [('bi-fonts','Name Matching','Fuzzy & phonetic matching against sanctions lists'),('bi-person-bounding-box','Face Recognition','AI facial comparison against watchlist photos'),('bi-bar-chart-steps','Risk Scoring','Combines name, DOB, ID & face signals'),('bi-lightning-charge-fill','Real-time','Results in seconds on the Reports dashboard')] %}
+                {% for icon, title, desc in [('bi-send','1. Submit','Details stored securely in the database'),('bi-clock','2. Batch Run','AI screening runs at 8 AM & 3 PM daily'),('bi-fonts','3. Name Matching','Fuzzy & phonetic matching against sanctions lists'),('bi-person-bounding-box','4. Face Recognition','AI facial comparison against watchlist photos'),('bi-bar-chart-steps','5. Risk Scoring','Name, DOB, ID & face signals combined'),('bi-clipboard-data','6. View Report','Results appear in Reports after batch completes')] %}
                 <div class="info-row">
                     <div class="info-icon"><i class="bi {{ icon }}"></i></div>
-                    <div><strong style="font-size:.92rem;display:block;">{{ title }}</strong><span style="font-size:.85rem;color:var(--ua-muted);">{{ desc }}</span></div>
+                    <div><strong style="font-size:.88rem;display:block;">{{ title }}</strong><span style="font-size:.82rem;color:var(--ua-muted);">{{ desc }}</span></div>
                 </div>
                 {% endfor %}
             </div>
         </div>
+
+        <!-- Status Key -->
         <div class="ua-card p-4">
             <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-tags-fill me-1" style="color:var(--ua-orange);"></i>Status Key</h6>
             <div class="d-flex flex-column gap-2">
@@ -125,5 +164,22 @@ dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0]){const dt=new DataTransfer();dt.items.add(e.dataTransfer.files[0]);fi.files=dt.files;show(e.dataTransfer.files[0])}});
 function show(f){const r=new FileReader();r.onload=e=>{document.getElementById('imgPreview').src=e.target.result;document.getElementById('previewWrap').style.display='block';document.getElementById('uploadText').textContent=f.name;document.getElementById('uploadIcon').className='bi bi-check-circle-fill';document.getElementById('uploadIcon').style.color='var(--c-clear)'};r.readAsDataURL(f)}
 function clearImg(){fi.value='';document.getElementById('previewWrap').style.display='none';document.getElementById('uploadText').textContent='Click or drag to upload';document.getElementById('uploadIcon').className='bi bi-cloud-upload';document.getElementById('uploadIcon').style.color='var(--ua-muted)'}
+
+// Next batch time
+(function(){
+    const now = new Date();
+    const slTime = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Colombo'}));
+    const h = slTime.getHours(), m = slTime.getMinutes();
+    let label = '';
+    if(h < 8 || (h === 8 && m === 0)){
+        label = 'Today 8:00 AM';
+    } else if(h < 15 || (h === 15 && m === 0)){
+        label = 'Today 3:00 PM';
+    } else {
+        label = 'Tomorrow 8:00 AM';
+    }
+    const el = document.getElementById('nextBatch');
+    if(el) el.textContent = label;
+})();
 </script>
 {% endblock %}
