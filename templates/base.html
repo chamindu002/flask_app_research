@@ -36,24 +36,24 @@
         body { font-family:'Inter',system-ui,sans-serif; background:var(--ua-bg); color:var(--ua-text); margin:0; display:flex; flex-direction:column; min-height:100vh; -webkit-font-smoothing:antialiased; }
 
         /* ═══ NAVBAR ═══ */
-        .ua-nav { background:var(--ua-navy); position:sticky; top:0; z-index:1050; }
-        .ua-nav-inner { display:flex; align-items:center; height:60px; gap:0; }
-        .ua-logo { display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0; }
-        .ua-logo-mark { width:34px; height:34px; background:var(--ua-orange); border-radius:8px; display:grid; place-items:center; color:#fff; font-size:.95rem; }
-        .ua-logo-text { font-weight:700; font-size:.92rem; color:#fff; line-height:1.15; }
-        .ua-logo-sub { font-size:.6rem; font-weight:500; color:var(--ua-orange); letter-spacing:.08em; text-transform:uppercase; }
-        .ua-sep { width:1px; height:24px; background:rgba(255,255,255,.12); margin:0 20px; }
-        .ua-nav-links { display:flex; align-items:stretch; height:60px; gap:2px; margin-left:auto; }
-        .ua-nav-link { display:flex; align-items:center; gap:6px; padding:0 16px; font-size:.84rem; font-weight:500; color:rgba(255,255,255,.6); text-decoration:none; border-bottom:2px solid transparent; transition:all .15s; }
-        .ua-nav-link:hover { color:rgba(255,255,255,.9); background:rgba(255,255,255,.04); }
+        .ua-nav { background:var(--ua-navy); position:sticky; top:0; z-index:1050; box-shadow:0 2px 12px rgba(0,0,0,.15); }
+        .ua-nav-inner { display:flex; align-items:center; height:68px; gap:0; }
+        .ua-logo { display:flex; align-items:center; gap:12px; text-decoration:none; flex-shrink:0; }
+        .ua-logo-mark { width:38px; height:38px; background:var(--ua-orange); border-radius:9px; display:grid; place-items:center; color:#fff; font-size:1.05rem; }
+        .ua-logo-text { font-weight:700; font-size:1.05rem; color:#fff; line-height:1.15; }
+        .ua-logo-sub { font-size:.72rem; font-weight:600; color:var(--ua-orange); letter-spacing:.06em; text-transform:uppercase; }
+        .ua-sep { width:1px; height:28px; background:rgba(255,255,255,.12); margin:0 24px; }
+        .ua-nav-links { display:flex; align-items:stretch; height:68px; gap:2px; margin-left:auto; }
+        .ua-nav-link { display:flex; align-items:center; gap:7px; padding:0 18px; font-size:.92rem; font-weight:500; color:rgba(255,255,255,.6); text-decoration:none; border-bottom:2.5px solid transparent; transition:all .15s; }
+        .ua-nav-link:hover { color:rgba(255,255,255,.95); background:rgba(255,255,255,.05); }
         .ua-nav-link.active { color:#fff; border-bottom-color:var(--ua-orange); }
-        .ua-nav-link i { font-size:1rem; }
-        .ua-nav-badge { background:var(--ua-orange); color:#fff; font-size:.55rem; font-weight:700; padding:1px 6px; border-radius:8px; margin-left:2px; }
-        .ua-nav-toggle { display:none; background:none; border:none; color:rgba(255,255,255,.7); font-size:1.4rem; padding:8px; cursor:pointer; margin-left:auto; }
+        .ua-nav-link i { font-size:1.1rem; }
+        .ua-nav-badge { background:var(--ua-orange); color:#fff; font-size:.65rem; font-weight:700; padding:2px 7px; border-radius:8px; margin-left:4px; }
+        .ua-nav-toggle { display:none; background:none; border:none; color:rgba(255,255,255,.7); font-size:1.5rem; padding:8px; cursor:pointer; margin-left:auto; }
 
         /* ═══ BREADCRUMB ═══ */
         .ua-bread { background:var(--ua-card); border-bottom:1px solid var(--ua-border); padding:8px 0; }
-        .ua-bread ol { margin:0; padding:0; list-style:none; display:flex; gap:6px; font-size:.78rem; }
+        .ua-bread ol { margin:0; padding:0; list-style:none; display:flex; gap:6px; font-size:.82rem; }
         .ua-bread li { display:flex; align-items:center; gap:6px; }
         .ua-bread li+li::before { content:'/'; color:var(--ua-muted); }
         .ua-bread a { color:var(--ua-orange); text-decoration:none; font-weight:500; }
@@ -63,21 +63,21 @@
         .ua-card { background:var(--ua-card); border:1px solid var(--ua-border); border-radius:var(--ua-radius); box-shadow:var(--ua-shadow-sm); }
 
         /* ═══ BUTTONS ═══ */
-        .btn-ua { background:var(--ua-orange); color:#fff; border:none; border-radius:8px; font-weight:600; font-size:.86rem; padding:9px 20px; transition:all .15s; }
+        .btn-ua { background:var(--ua-orange); color:#fff; border:none; border-radius:8px; font-weight:600; font-size:.9rem; padding:10px 22px; transition:all .15s; }
         .btn-ua:hover { background:var(--ua-orange-hover); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(232,99,10,.25); }
-        .btn-ua-outline { background:transparent; color:var(--ua-orange); border:1.5px solid var(--ua-orange); border-radius:8px; font-weight:600; font-size:.86rem; padding:8px 20px; transition:all .15s; }
+        .btn-ua-outline { background:transparent; color:var(--ua-orange); border:1.5px solid var(--ua-orange); border-radius:8px; font-weight:600; font-size:.9rem; padding:9px 22px; transition:all .15s; }
         .btn-ua-outline:hover { background:var(--ua-orange-glow); color:var(--ua-orange-hover); }
-        .btn-ua-ghost { background:var(--ua-bg); color:var(--ua-text-2); border:1.5px solid var(--ua-border); border-radius:8px; font-weight:500; font-size:.82rem; padding:6px 14px; transition:all .15s; }
+        .btn-ua-ghost { background:var(--ua-bg); color:var(--ua-text-2); border:1.5px solid var(--ua-border); border-radius:8px; font-weight:500; font-size:.85rem; padding:7px 16px; transition:all .15s; }
         .btn-ua-ghost:hover { border-color:var(--ua-orange); color:var(--ua-orange); }
 
         /* ═══ FORMS ═══ */
-        .ua-label { font-weight:600; font-size:.8rem; color:var(--ua-text-2); margin-bottom:5px; display:block; }
-        .ua-input { border:1.5px solid var(--ua-border); border-radius:8px; padding:9px 13px; font-size:.86rem; width:100%; transition:border .15s, box-shadow .15s; background:#fff; color:var(--ua-text); }
+        .ua-label { font-weight:600; font-size:.9rem; color:var(--ua-text); margin-bottom:6px; display:block; }
+        .ua-input { border:1.5px solid var(--ua-border); border-radius:8px; padding:10px 14px; font-size:.92rem; width:100%; transition:border .15s, box-shadow .15s; background:#fff; color:var(--ua-text); }
         .ua-input:focus { outline:none; border-color:var(--ua-orange); box-shadow:0 0 0 3px var(--ua-orange-glow); }
-        .ua-input::placeholder { color:var(--ua-muted); }
+        .ua-input::placeholder { color:#8896A8; }
 
         /* ═══ BADGES ═══ */
-        .ua-badge { font-size:.65rem; font-weight:700; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.03em; display:inline-block; }
+        .ua-badge { font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:5px; text-transform:uppercase; letter-spacing:.03em; display:inline-block; }
         .badge-hit        { background:var(--c-hit-bg);    color:var(--c-hit);    border:1px solid rgba(220,38,38,.15); }
         .badge-review     { background:var(--c-review-bg); color:var(--c-review); border:1px solid rgba(217,119,6,.15); }
         .badge-face-hit   { background:var(--c-face-bg);   color:var(--c-face);   border:1px solid rgba(124,58,237,.15); }
@@ -85,14 +85,14 @@
         .badge-clear      { background:var(--c-clear-bg);  color:var(--c-clear);  border:1px solid rgba(5,150,105,.15); }
 
         /* ═══ ALERTS ═══ */
-        .alert { border-radius:var(--ua-radius); font-size:.88rem; border:none; }
+        .alert { border-radius:var(--ua-radius); font-size:.9rem; border:none; }
 
         /* ═══ FOOTER ═══ */
         .ua-footer { background:var(--ua-navy); color:rgba(255,255,255,.55); padding:40px 0 0; margin-top:auto; }
-        .ua-footer h6 { color:#fff; font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.08); }
-        .ua-footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:.82rem; transition:color .15s; }
+        .ua-footer h6 { color:#fff; font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.08); }
+        .ua-footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:.88rem; transition:color .15s; }
         .ua-footer a:hover { color:var(--ua-orange); }
-        .ua-footer-bottom { border-top:1px solid rgba(255,255,255,.07); margin-top:32px; padding:14px 0; font-size:.75rem; color:rgba(255,255,255,.35); }
+        .ua-footer-bottom { border-top:1px solid rgba(255,255,255,.07); margin-top:32px; padding:14px 0; font-size:.8rem; color:rgba(255,255,255,.35); }
 
         /* ═══ MODAL ═══ */
         .modal-content { border:none; border-radius:12px; overflow:hidden; }
@@ -101,7 +101,7 @@
         @media(max-width:991px) {
             .ua-sep { display:none; }
             .ua-nav-toggle { display:block; }
-            .ua-nav-links { display:none; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:var(--ua-navy); height:auto; gap:0; padding:8px 0; box-shadow:0 8px 24px rgba(0,0,0,.3); }
+            .ua-nav-links { display:none; flex-direction:column; position:absolute; top:68px; left:0; right:0; background:var(--ua-navy); height:auto; gap:0; padding:8px 0; box-shadow:0 8px 24px rgba(0,0,0,.3); }
             .ua-nav-links.open { display:flex; }
             .ua-nav-link { height:auto; padding:12px 24px; border-bottom:none; border-left:3px solid transparent; }
             .ua-nav-link.active { border-left-color:var(--ua-orange); border-bottom:none; }
@@ -165,15 +165,15 @@
                     <div class="d-flex align-items-center gap-2 mb-3">
                         <div class="ua-logo-mark" style="width:30px;height:30px;font-size:.85rem;"><i class="bi bi-shield-lock-fill"></i></div>
                         <div>
-                            <div style="color:#fff;font-weight:700;font-size:.88rem;">Union Assurance PLC</div>
-                            <div style="color:var(--ua-orange);font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Est. 1987 · Colombo, Sri Lanka</div>
+                            <div style="color:#fff;font-weight:700;font-size:.95rem;">Union Assurance PLC</div>
+                            <div style="color:var(--ua-orange);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;">Est. 1987 · Colombo, Sri Lanka</div>
                         </div>
                     </div>
-                    <p style="font-size:.8rem;line-height:1.7;max-width:300px;">AML/CFT sanction screening platform with AI-powered name matching and facial recognition. IRCSL regulated.</p>
+                    <p style="font-size:.86rem;line-height:1.7;max-width:300px;">AML/CFT sanction screening platform with AI-powered name matching and facial recognition. IRCSL regulated.</p>
                     <div class="d-flex gap-2 flex-wrap mt-3">
-                        <span style="font-size:.6rem;font-weight:600;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-award-fill me-1" style="color:var(--ua-orange);"></i>IRCSL</span>
-                        <span style="font-size:.6rem;font-weight:600;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-patch-check-fill me-1" style="color:var(--ua-orange);"></i>SOC 2</span>
-                        <span style="font-size:.6rem;font-weight:600;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-lock-fill me-1" style="color:var(--ua-orange);"></i>AML/CFT</span>
+                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-award-fill me-1" style="color:var(--ua-orange);"></i>IRCSL</span>
+                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-patch-check-fill me-1" style="color:var(--ua-orange);"></i>SOC 2</span>
+                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-lock-fill me-1" style="color:var(--ua-orange);"></i>AML/CFT</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -200,8 +200,8 @@
                         <a href="#"><i class="bi bi-geo-alt me-1"></i>20 St Michael's Rd, Colombo 03</a>
                     </div>
                     <div style="margin-top:16px;background:rgba(232,99,10,.08);border:1px solid rgba(232,99,10,.15);border-radius:8px;padding:10px 12px;">
-                        <span style="font-size:.7rem;color:var(--ua-orange);font-weight:600;"><i class="bi bi-circle-fill me-1" style="font-size:.4rem;"></i>SYSTEM STATUS</span>
-                        <span style="font-size:.78rem;color:rgba(255,255,255,.6);margin-left:8px;">All systems operational <span style="color:#4ade80;font-weight:600;">● Live</span></span>
+                        <span style="font-size:.78rem;color:var(--ua-orange);font-weight:600;"><i class="bi bi-circle-fill me-1" style="font-size:.4rem;"></i>SYSTEM STATUS</span>
+                        <span style="font-size:.82rem;color:rgba(255,255,255,.6);margin-left:8px;">All systems operational <span style="color:#4ade80;font-weight:600;">● Live</span></span>
                     </div>
                 </div>
             </div>

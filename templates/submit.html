@@ -6,10 +6,10 @@
 <style>
 .page-hdr { background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3)); border-radius:var(--ua-radius); padding:22px 28px; margin-bottom:24px; display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; }
 .page-hdr::after { content:''; position:absolute; right:-40px; top:-40px; width:180px; height:180px; background:rgba(232,99,10,.08); border-radius:50%; }
-.page-hdr h4 { color:#fff; font-weight:700; font-size:1.15rem; margin:0; }
-.page-hdr p { color:rgba(255,255,255,.5); font-size:.82rem; margin:3px 0 0; }
+.page-hdr h4 { color:#fff; font-weight:700; font-size:1.25rem; margin:0; }
+.page-hdr p { color:rgba(255,255,255,.55); font-size:.9rem; margin:4px 0 0; }
 .page-hdr-icon { width:42px; height:42px; background:var(--ua-orange); border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.15rem; flex-shrink:0; z-index:1; }
-.section-label { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ua-orange); border-bottom:1px solid var(--ua-border); padding-bottom:8px; margin-bottom:16px; }
+.section-label { font-size:.9rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ua-orange); border-bottom:2px solid var(--ua-border); padding-bottom:10px; margin-bottom:20px; }
 .upload-zone { border:2px dashed var(--ua-border); border-radius:10px; background:var(--ua-bg); padding:24px; text-align:center; cursor:pointer; transition:all .15s; }
 .upload-zone:hover, .upload-zone.over { border-color:var(--ua-orange); background:var(--ua-orange-glow); }
 .upload-zone i { font-size:2rem; color:var(--ua-muted); }
@@ -70,8 +70,8 @@
                 <div class="mb-4">
                     <div class="upload-zone" id="dropZone" onclick="document.getElementById('imgInput').click()">
                         <i class="bi bi-cloud-upload" id="uploadIcon"></i>
-                        <div style="font-size:.85rem;font-weight:500;color:var(--ua-text-2);margin-top:6px;" id="uploadText">Click or drag to upload</div>
-                        <div style="font-size:.72rem;color:var(--ua-muted);margin-top:3px;">JPG / PNG — clear face photo</div>
+                        <div style="font-size:.95rem;font-weight:600;color:var(--ua-text-2);margin-top:6px;" id="uploadText">Click or drag to upload</div>
+                        <div style="font-size:.82rem;color:var(--ua-muted);margin-top:3px;">JPG / PNG — clear face photo</div>
                         <input type="file" name="image" id="imgInput" class="d-none" accept="image/jpeg,image/png,image/jpg">
                     </div>
                     <div class="text-center mt-3" id="previewWrap" style="display:none;">
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="d-flex gap-3 flex-wrap">
-                    <button type="submit" class="btn-ua" style="padding:11px 28px;font-size:.9rem;box-shadow:0 4px 16px rgba(232,99,10,.25);"><i class="bi bi-send-fill me-2"></i>Run Screening</button>
+                    <button type="submit" class="btn-ua" style="padding:11px 28px;font-size:.9rem;box-shadow:0 4px 16px rgba(232,99,10,.25);"><i class="bi bi-send-fill me-2"></i>Submit</button>
                     <a href="/reports" class="btn-ua-outline" style="padding:11px 24px;"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
                 </div>
             </form>
@@ -91,23 +91,23 @@
     <!-- Sidebar -->
     <div class="col-lg-4">
         <div class="ua-card p-4 mb-3">
-            <h6 style="font-size:.78rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;"><i class="bi bi-info-circle-fill me-1" style="color:var(--ua-orange);"></i>How It Works</h6>
+            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-info-circle-fill me-1" style="color:var(--ua-orange);"></i>How It Works</h6>
             <div class="info-block">
                 {% for icon, title, desc in [('bi-fonts','Name Matching','Fuzzy & phonetic matching against sanctions lists'),('bi-person-bounding-box','Face Recognition','AI facial comparison against watchlist photos'),('bi-bar-chart-steps','Risk Scoring','Combines name, DOB, ID & face signals'),('bi-lightning-charge-fill','Real-time','Results in seconds on the Reports dashboard')] %}
                 <div class="info-row">
                     <div class="info-icon"><i class="bi {{ icon }}"></i></div>
-                    <div><strong style="font-size:.8rem;display:block;">{{ title }}</strong><span style="font-size:.72rem;color:var(--ua-muted);">{{ desc }}</span></div>
+                    <div><strong style="font-size:.92rem;display:block;">{{ title }}</strong><span style="font-size:.85rem;color:var(--ua-muted);">{{ desc }}</span></div>
                 </div>
                 {% endfor %}
             </div>
         </div>
         <div class="ua-card p-4">
-            <h6 style="font-size:.78rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;"><i class="bi bi-tags-fill me-1" style="color:var(--ua-orange);"></i>Status Key</h6>
+            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-tags-fill me-1" style="color:var(--ua-orange);"></i>Status Key</h6>
             <div class="d-flex flex-column gap-2">
                 {% for cls, label, desc in [('badge-hit','HIGH HIT','Escalate immediately'),('badge-hit','HIT','Confirmed sanctions match'),('badge-review','REVIEW','Manual review required'),('badge-face-hit','FACE HIT','Face recognition match'),('badge-face-review','FACE REVIEW','Possible face match')] %}
                 <div class="d-flex align-items-center gap-2">
                     <span class="ua-badge {{ cls }}">{{ label }}</span>
-                    <small style="color:var(--ua-muted);font-size:.75rem;">{{ desc }}</small>
+                    <small style="color:var(--ua-text-2);font-size:.86rem;">{{ desc }}</small>
                 </div>
                 {% endfor %}
             </div>
