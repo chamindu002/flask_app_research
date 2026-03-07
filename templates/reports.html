@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block title %}Reports — UA Screening{% endblock %}
+{% block breadcrumb %}<li><span class="current">Reports</span></li>{% endblock %}
+
+{% block extra_style %}
+<style>
+.page-hdr { background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3)); border-radius:var(--ua-radius); padding:22px 28px; margin-bottom:24px; display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; }
+.page-hdr::after { content:''; position:absolute; right:-40px; top:-40px; width:180px; height:180px; background:rgba(232,99,10,.08); border-radius:50%; }
+.page-hdr h4 { color:#fff; font-weight:700; font-size:1.15rem; margin:0; }
+.page-hdr p { color:rgba(255,255,255,.5); font-size:.82rem; margin:3px 0 0; }
+.page-hdr-icon { width:42px; height:42px; background:var(--ua-orange); border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.15rem; flex-shrink:0; z-index:1; }
+
+.stat { border-radius:var(--ua-radius); padding:14px; position:relative; overflow:hidden; transition:transform .15s; background:#fff; border:1px solid var(--ua-border); }
+.stat:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.06); }
+.stat-icon { width:32px; height:32px; border-radius:8px; display:grid; place-items:center; font-size:.9rem; margin-bottom:8px; }
+.stat-val { font-size:1.4rem; font-weight:800; line-height:1; color:var(--ua-text); }
+.stat-lbl { font-size:.65rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-top:4px; color:var(--ua-muted); }
+.s-total .stat-icon   { background:var(--ua-orange-glow); color:var(--ua-orange); }
+.s-hit .stat-icon     { background:rgba(220,38,38,.08); color:var(--c-hit); }
+.s-review .stat-icon  { background:rgba(217,119,6,.08); color:var(--c-review); }
+.s-face .stat-icon    { background:rgba(124,58,237,.08); color:var(--c-face); }
+
+.tbl thead th { background:var(--ua-navy); color:rgba(255,255,255,.8); font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:11px 12px; border:none; }
+.tbl tbody td { padding:10px 12px; vertical-align:middle; font-size:.84rem; border-bottom:1px solid var(--ua-border); }
+.tbl tbody tr:hover { background:#FAFBFF; }
+.tbl tbody tr:last-child td { border-bottom:none; }
+.av { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--ua-navy-2),var(--ua-navy)); color:#fff; display:grid; place-items:center; font-size:.8rem; flex-shrink:0; }
+.risk-track { height:5px; border-radius:3px; background:#E9ECEF; width:60px; }
+.risk-bar { height:100%; border-radius:3px; }
+.btn-view { background:var(--ua-orange-glow); border:1px solid rgba(232,99,10,.2); color:var(--ua-orange); font-size:.74rem; font-weight:600; padding:4px 10px; border-radius:6px; cursor:pointer; transition:all .15s; }
+.btn-view:hover { background:var(--ua-orange); color:#fff; border-color:var(--ua-orange); }
+.empty-state { padding:40px; color:var(--ua-muted); text-align:center; }
+.empty-state i { font-size:2.2rem; opacity:.3; margin-bottom:8px; display:block; }
+
+.modal-hdr { background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3)); color:#fff; }
+.chip { background:var(--ua-bg); border:1px solid var(--ua-border); border-radius:var(--ua-radius); padding:14px; text-align:center; }
+.chip-label { font-size:.65rem; color:var(--ua-muted); font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
+.chip-val { font-size:1.2rem; font-weight:700; margin-top:3px; }
+.detail-tbl th { background:var(--ua-bg); font-weight:600; font-size:.8rem; width:35%; color:var(--ua-text-2); }
+.detail-tbl td { font-size:.84rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-hdr">
+    <div class="page-hdr-icon"><i class="bi bi-clipboard-data-fill"></i></div>
+    <div style="z-index:1;"><h4>Screening Reports</h4><p>Real-time AML/CFT sanction screening results</p></div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="ua-card stat s-total"><div class="stat-icon"><i class="bi bi-list-check"></i></div><div class="stat-val" id="totalCount">—</div><div class="stat-lbl">Total Screened</div></div></div>
+    <div class="col-6 col-md-3"><div class="ua-card stat s-hit"><div class="stat-icon"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="stat-val" id="hitCount">—</div><div class="stat-lbl">HITs</div></div></div>
+    <div class="col-6 col-md-3"><div class="ua-card stat s-review"><div class="stat-icon"><i class="bi bi-eye-fill"></i></div><div class="stat-val" id="reviewCount">—</div><div class="stat-lbl">Reviews</div></div></div>
+    <div class="col-6 col-md-3"><div class="ua-card stat s-face"><div class="stat-icon"><i class="bi bi-person-bounding-box"></i></div><div class="stat-val" id="faceCount">—</div><div class="stat-lbl">Face Matches</div></div></div>
+</div>
+
+<!-- Filter -->
+<div class="ua-card p-3 mb-4">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label class="ua-label"><i class="bi bi-search me-1"></i>Search</label>
+            <input type="text" id="searchInput" class="ua-input" placeholder="Customer name or ID...">
+        </div>
+        <div class="col-md-4">
+            <label class="ua-label"><i class="bi bi-funnel me-1"></i>Status</label>
+            <select id="statusFilter" class="ua-input">
+                <option value="">All</option>
+                <option value="HIT">HIT</option>
+                <option value="HIGH HIT">HIGH HIT</option>
+                <option value="FACE HIT">FACE HIT</option>
+                <option value="REVIEW">REVIEW</option>
+                <option value="FACE_REVIEW">FACE REVIEW</option>
+            </select>
+        </div>
+        <div class="col-md-3"><button class="btn-ua w-100" style="padding:10px;" onclick="loadReports()"><i class="bi bi-search me-1"></i>Search</button></div>
+    </div>
+</div>
+
+<!-- Table -->
+<div class="ua-card" style="overflow:hidden;">
+    <div class="table-responsive">
+        <table class="table tbl mb-0">
+            <thead><tr><th>#</th><th>Customer</th><th>Status</th><th>Risk</th><th>Confidence</th><th>Name</th><th>Face</th><th>Reason</th><th class="text-center">Action</th></tr></thead>
+            <tbody id="reportBody"><tr><td colspan="9" class="empty-state"><div class="spinner-border spinner-border-sm mb-2" style="color:var(--ua-orange);"></div><br>Loading...</td></tr></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content" style="border:none;border-radius:12px;overflow:hidden;">
+            <div class="modal-header modal-hdr">
+                <div class="d-flex align-items-center gap-2"><i class="bi bi-file-earmark-text-fill"></i><h6 class="modal-title mb-0" style="font-weight:700;">Full Screening Report</h6></div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4" id="modalBody"><div class="text-center py-5" style="color:var(--ua-muted);"><div class="spinner-border mb-2" style="color:var(--ua-orange);width:1.6rem;height:1.6rem;"></div><br>Loading...</div></div>
+            <div class="modal-footer" style="background:var(--ua-bg);border-top:1px solid var(--ua-border);">
+                <small class="text-muted me-auto"><i class="bi bi-shield-check me-1" style="color:var(--c-clear);"></i>Union Assurance — AML/CFT</small>
+                <button class="btn-ua-ghost" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let dt;const dm=new bootstrap.Modal(document.getElementById('detailModal'));
+document.getElementById('searchInput').addEventListener('input',()=>{clearTimeout(dt);dt=setTimeout(loadReports,400)});
+document.getElementById('statusFilter').addEventListener('change',loadReports);
+
+function badge(s){
+    const u=(s||'').toUpperCase();
+    if(u.includes('HIGH HIT'))return'<span class="ua-badge badge-hit">HIGH HIT</span>';
+    if(u==='HIT')return'<span class="ua-badge badge-hit">HIT</span>';
+    if(u==='FACE HIT')return'<span class="ua-badge badge-face-hit">FACE HIT</span>';
+    if(u==='FACE_REVIEW')return'<span class="ua-badge badge-face-review">FACE REVIEW</span>';
+    if(u==='REVIEW')return'<span class="ua-badge badge-review">REVIEW</span>';
+    return`<span class="ua-badge badge-clear">${s}</span>`;
+}
+function riskB(sc){
+    const p=Math.round((sc||0)*100);let c='var(--c-clear)';
+    if(p>=80)c='var(--c-hit)';else if(p>=60)c='var(--ua-orange)';else if(p>=40)c='var(--c-review)';
+    return`<div class="d-flex align-items-center gap-2"><div class="risk-track"><div class="risk-bar" style="width:${p}%;background:${c};"></div></div><span style="font-weight:600;font-size:.78rem;">${p}%</span></div>`;
+}
+
+async function loadReports(){
+    const s=document.getElementById('searchInput').value.trim(),st=document.getElementById('statusFilter').value,p=new URLSearchParams();
+    if(s)p.set('search',s);if(st)p.set('status',st);
+    document.getElementById('reportBody').innerHTML='<tr><td colspan="9" class="empty-state"><div class="spinner-border spinner-border-sm mb-2" style="color:var(--ua-orange);"></div><br>Loading...</td></tr>';
+    try{
+        const r=await fetch(`/api/reports?${p}`),j=await r.json(),rows=j.data||[];
+        document.getElementById('totalCount').textContent=rows.length;
+        document.getElementById('hitCount').textContent=rows.filter(r=>['HIT','HIGH HIT'].includes((r.status||'').toUpperCase())).length;
+        document.getElementById('reviewCount').textContent=rows.filter(r=>(r.status||'').toUpperCase()==='REVIEW').length;
+        document.getElementById('faceCount').textContent=rows.filter(r=>{const s=(r.status||'').toUpperCase(),f=(r.score_face||'').replace('%','').trim();return s.includes('FACE')||(f&&f!=='N/A'&&parseFloat(f)>0)}).length;
+        const tb=document.getElementById('reportBody');
+        if(!rows.length){tb.innerHTML='<tr><td colspan="9" class="empty-state"><i class="bi bi-inbox"></i>No results</td></tr>';return;}
+        tb.innerHTML=rows.map((r,i)=>`<tr>
+            <td style="color:var(--ua-muted);font-size:.78rem;font-weight:600;">${String(i+1).padStart(2,'0')}</td>
+            <td><div class="d-flex align-items-center gap-2"><div class="av"><i class="bi bi-person-fill"></i></div><div><div style="font-weight:600;font-size:.84rem;">${r.customer_name||'—'}</div><div style="font-size:.7rem;color:var(--ua-muted);">${r.customer_id||''}</div></div></div></td>
+            <td>${badge(r.status)}</td>
+            <td style="min-width:100px;">${riskB(r.risk_score)}</td>
+            <td><small style="color:var(--ua-text-2);">${r.confidence||'—'}</small></td>
+            <td><small>${r.score_name||'—'}</small></td>
+            <td><small>${r.score_face||'—'}</small></td>
+            <td><small style="color:var(--ua-muted);max-width:140px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.match_reason||'—'}</small></td>
+            <td class="text-center"><button class="btn-view" onclick="viewReport('${r.id}')"><i class="bi bi-eye me-1"></i>View</button></td>
+        </tr>`).join('');
+    }catch(e){console.error(e);document.getElementById('reportBody').innerHTML='<tr><td colspan="9" class="text-center py-4" style="color:var(--c-hit);"><i class="bi bi-wifi-off me-1"></i>Failed to load</td></tr>';}
+}
+
+async function viewReport(id){
+    const b=document.getElementById('modalBody');
+    b.innerHTML='<div class="text-center py-5" style="color:var(--ua-muted);"><div class="spinner-border mb-2" style="color:var(--ua-orange);width:1.6rem;height:1.6rem;"></div><br>Loading...</div>';
+    dm.show();
+    try{
+        const res=await fetch(`/api/reports/${id}`),j=await res.json();
+        if(j.error){b.innerHTML=`<p style="color:var(--c-hit);">${j.error}</p>`;return;}
+        const r=j.data,p=Math.round((r.risk_score||0)*100);
+        let rc='--c-clear',rbg='var(--c-clear-bg)';
+        if(p>=80){rc='--c-hit';rbg='var(--c-hit-bg)';}else if(p>=60){rc='--ua-orange';rbg='var(--ua-orange-glow)';}else if(p>=40){rc='--c-review';rbg='var(--c-review-bg)';}
+
+        b.innerHTML=`
+        <div class="row mb-4">
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+                ${r.customer_image_url?`<img src="${r.customer_image_url}" style="max-width:100%;max-height:180px;border-radius:10px;border:2px solid var(--ua-border);">`:`<div style="height:140px;background:var(--ua-bg);border:2px dashed var(--ua-border);border-radius:10px;display:grid;place-items:center;"><i class="bi bi-person-fill" style="font-size:3rem;color:var(--ua-muted);opacity:.3;"></i></div>`}
+                <div style="font-weight:700;margin-top:8px;">${r.customer_name||'—'}</div>
+                <small style="color:var(--ua-muted);">${r.customer_id||'No ID'}</small>
+            </div>
+            <div class="col-md-9">
+                <div class="row g-3">
+                    <div class="col-sm-4"><div class="chip"><div class="chip-label">Status</div><div class="mt-2">${badge(r.status)}</div></div></div>
+                    <div class="col-sm-4"><div class="chip" style="background:${rbg};"><div class="chip-label">Risk Score</div><div class="chip-val" style="color:var(${rc});">${p}%</div><div class="progress mt-2" style="height:4px;background:rgba(0,0,0,.06);border-radius:2px;"><div class="progress-bar" style="width:${p}%;background:var(${rc});border-radius:2px;"></div></div></div></div>
+                    <div class="col-sm-4"><div class="chip"><div class="chip-label">Confidence</div><div class="chip-val">${r.confidence||'—'}</div></div></div>
+                </div>
+                <div style="margin-top:12px;padding:10px 14px;background:var(--c-review-bg);border:1px solid rgba(217,119,6,.12);border-radius:8px;">
+                    <small style="color:var(--c-review);font-weight:600;"><i class="bi bi-exclamation-circle me-1"></i>Reason:</small>
+                    <span style="font-weight:600;font-size:.86rem;margin-left:4px;">${r.match_reason||'—'}</span>
+                </div>
+            </div>
+        </div>
+        <hr style="border-color:var(--ua-border);">
+
+        <h6 style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:10px;"><i class="bi bi-bar-chart-fill me-1"></i>Score Breakdown</h6>
+        <div class="row g-2 mb-4">
+            ${['Name|'+r.score_name+'|bi-fonts','DOB|'+r.score_dob+'|bi-calendar-event','Nationality|'+r.score_nat+'|bi-globe2','ID|'+r.score_id+'|bi-credit-card','Face|'+r.score_face+'|bi-person-bounding-box'].map(s=>{const[l,v,i]=s.split('|');const n=parseFloat(v)||0;let c='var(--c-clear)';if(n>=80)c='var(--c-hit)';else if(n>=50)c='var(--c-review)';const d=v&&v!=='N/A'?v:'—';return`<div class="col"><div class="chip"><i class="bi ${i}" style="color:var(--ua-muted);"></i><div style="font-weight:700;color:${c};margin-top:4px;font-size:1rem;">${d}</div><div class="chip-label">${l}</div></div></div>`}).join('')}
+        </div>
+        <hr style="border-color:var(--ua-border);">
+
+        <h6 style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c-clear);margin-bottom:10px;"><i class="bi bi-file-text-fill me-1"></i>Text Match</h6>
+        <table class="table table-sm table-bordered detail-tbl mb-4"><tbody>
+            <tr><th>Matched Name</th><td>${r.source_name_text||'—'}</td></tr>
+            <tr><th>Alias</th><td>${r.source_alias_text||'—'}</td></tr>
+            <tr><th>Source ID</th><td>${r.source_id_text||'—'}</td></tr>
+            <tr><th>Type</th><td>${r.match_type||'—'}</td></tr>
+            <tr><th>Source List</th><td>${r.source_list||'—'}</td></tr>
+        </tbody></table>
+
+        <h6 style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c-face);margin-bottom:10px;"><i class="bi bi-person-bounding-box me-1"></i>Face Match</h6>
+        <table class="table table-sm table-bordered detail-tbl mb-4"><tbody>
+            <tr><th>Matched Person</th><td>${r.face_matched_person||'N/A'}</td></tr>
+            <tr><th>Person ID</th><td>${r.face_matched_id||'N/A'}</td></tr>
+            <tr><th>Category</th><td>${r.face_matched_category||'N/A'}</td></tr>
+            <tr><th>Face Score</th><td>${r.score_face||'N/A'}</td></tr>
+        </tbody></table>
+
+        <h6 style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c-info);margin-bottom:10px;"><i class="bi bi-calendar-check me-1"></i>DOB Comparison</h6>
+        <table class="table table-sm table-bordered detail-tbl mb-4"><tbody>
+            <tr><th>Customer DOB</th><td>${r.customer_dob||'—'}</td></tr>
+            <tr><th>Source DOB</th><td>${r.source_dob||'—'}</td></tr>
+        </tbody></table>
+
+        <div style="padding:10px 14px;background:var(--ua-bg);border:1px solid var(--ua-border);border-radius:8px;font-size:.75rem;color:var(--ua-muted);display:flex;gap:16px;flex-wrap:wrap;">
+            <span><i class="bi bi-clock me-1"></i>${r.screened_at?new Date(r.screened_at).toLocaleString():'—'}</span>
+            <span><i class="bi bi-hash me-1"></i>${r.id}</span>
+        </div>`;
+    }catch(e){console.error(e);b.innerHTML='<p style="color:var(--c-hit);"><i class="bi bi-wifi-off me-1"></i>Failed to load</p>';}
+}
+
+loadReports();
+</script>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Submit Customer — UA Screening{% endblock %}
+{% block breadcrumb %}<li><span class="current">Submit Customer</span></li>{% endblock %}
+
+{% block extra_style %}
+<style>
+.page-hdr { background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3)); border-radius:var(--ua-radius); padding:22px 28px; margin-bottom:24px; display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; }
+.page-hdr::after { content:''; position:absolute; right:-40px; top:-40px; width:180px; height:180px; background:rgba(232,99,10,.08); border-radius:50%; }
+.page-hdr h4 { color:#fff; font-weight:700; font-size:1.15rem; margin:0; }
+.page-hdr p { color:rgba(255,255,255,.5); font-size:.82rem; margin:3px 0 0; }
+.page-hdr-icon { width:42px; height:42px; background:var(--ua-orange); border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.15rem; flex-shrink:0; z-index:1; }
+.section-label { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ua-orange); border-bottom:1px solid var(--ua-border); padding-bottom:8px; margin-bottom:16px; }
+.upload-zone { border:2px dashed var(--ua-border); border-radius:10px; background:var(--ua-bg); padding:24px; text-align:center; cursor:pointer; transition:all .15s; }
+.upload-zone:hover, .upload-zone.over { border-color:var(--ua-orange); background:var(--ua-orange-glow); }
+.upload-zone i { font-size:2rem; color:var(--ua-muted); }
+.upload-zone.over i { color:var(--ua-orange); }
+.info-block { background:linear-gradient(135deg,#F0F4FF,var(--ua-bg)); border:1px solid var(--ua-border); border-radius:var(--ua-radius); padding:16px; }
+.info-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.info-row:last-child { margin:0; }
+.info-icon { width:30px; height:30px; border-radius:8px; background:var(--ua-orange-glow); display:grid; place-items:center; color:var(--ua-orange); flex-shrink:0; font-size:.85rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-hdr">
+    <div class="page-hdr-icon"><i class="bi bi-person-plus-fill"></i></div>
+    <div style="z-index:1;"><h4>Submit Customer for Screening</h4><p>Enter details to run a real-time AML/CFT risk check</p></div>
+</div>
+
+<div class="row g-4">
+    <!-- Form -->
+    <div class="col-lg-8">
+        <div class="ua-card p-4">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="section-label"><i class="bi bi-person me-1"></i>Personal Information</div>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="ua-label">Full Name <span style="color:var(--ua-orange);">*</span></label>
+                        <input type="text" name="full_name" class="ua-input" required placeholder="e.g. John Smith">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="ua-label">NIC / ID Number</label>
+                        <input type="text" name="nic" class="ua-input" placeholder="e.g. 200221302925">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="ua-label">Nationality</label>
+                        <input type="text" name="nationality" class="ua-input" placeholder="e.g. Sri Lankan">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="ua-label">Alias</label>
+                        <input type="text" name="alias" class="ua-input" placeholder="e.g. alternate name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="ua-label">Date of Birth</label>
+                        <input type="date" name="dob" class="ua-input">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="ua-label">Email</label>
+                        <input type="email" name="email" class="ua-input" placeholder="e.g. john@example.com">
+                    </div>
+                </div>
+
+                <div class="section-label"><i class="bi bi-journal-text me-1"></i>Additional</div>
+                <div class="mb-4">
+                    <label class="ua-label">Notes</label>
+                    <textarea name="note" class="ua-input" rows="2" placeholder="Additional context..."></textarea>
+                </div>
+
+                <div class="section-label"><i class="bi bi-camera me-1"></i>Face Photo</div>
+                <div class="mb-4">
+                    <div class="upload-zone" id="dropZone" onclick="document.getElementById('imgInput').click()">
+                        <i class="bi bi-cloud-upload" id="uploadIcon"></i>
+                        <div style="font-size:.85rem;font-weight:500;color:var(--ua-text-2);margin-top:6px;" id="uploadText">Click or drag to upload</div>
+                        <div style="font-size:.72rem;color:var(--ua-muted);margin-top:3px;">JPG / PNG — clear face photo</div>
+                        <input type="file" name="image" id="imgInput" class="d-none" accept="image/jpeg,image/png,image/jpg">
+                    </div>
+                    <div class="text-center mt-3" id="previewWrap" style="display:none;">
+                        <img id="imgPreview" style="max-height:160px;border-radius:10px;border:2px solid var(--ua-border);">
+                        <div class="mt-2"><button type="button" class="btn btn-sm btn-ua-ghost" onclick="clearImg()"><i class="bi bi-trash me-1"></i>Remove</button></div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap">
+                    <button type="submit" class="btn-ua" style="padding:11px 28px;font-size:.9rem;box-shadow:0 4px 16px rgba(232,99,10,.25);"><i class="bi bi-send-fill me-2"></i>Run Screening</button>
+                    <a href="/reports" class="btn-ua-outline" style="padding:11px 24px;"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <div class="ua-card p-4 mb-3">
+            <h6 style="font-size:.78rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;"><i class="bi bi-info-circle-fill me-1" style="color:var(--ua-orange);"></i>How It Works</h6>
+            <div class="info-block">
+                {% for icon, title, desc in [('bi-fonts','Name Matching','Fuzzy & phonetic matching against sanctions lists'),('bi-person-bounding-box','Face Recognition','AI facial comparison against watchlist photos'),('bi-bar-chart-steps','Risk Scoring','Combines name, DOB, ID & face signals'),('bi-lightning-charge-fill','Real-time','Results in seconds on the Reports dashboard')] %}
+                <div class="info-row">
+                    <div class="info-icon"><i class="bi {{ icon }}"></i></div>
+                    <div><strong style="font-size:.8rem;display:block;">{{ title }}</strong><span style="font-size:.72rem;color:var(--ua-muted);">{{ desc }}</span></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ua-card p-4">
+            <h6 style="font-size:.78rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;"><i class="bi bi-tags-fill me-1" style="color:var(--ua-orange);"></i>Status Key</h6>
+            <div class="d-flex flex-column gap-2">
+                {% for cls, label, desc in [('badge-hit','HIGH HIT','Escalate immediately'),('badge-hit','HIT','Confirmed sanctions match'),('badge-review','REVIEW','Manual review required'),('badge-face-hit','FACE HIT','Face recognition match'),('badge-face-review','FACE REVIEW','Possible face match')] %}
+                <div class="d-flex align-items-center gap-2">
+                    <span class="ua-badge {{ cls }}">{{ label }}</span>
+                    <small style="color:var(--ua-muted);font-size:.75rem;">{{ desc }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const dz=document.getElementById('dropZone'), fi=document.getElementById('imgInput');
+fi.addEventListener('change',()=>{if(fi.files[0])show(fi.files[0])});
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0]){const dt=new DataTransfer();dt.items.add(e.dataTransfer.files[0]);fi.files=dt.files;show(e.dataTransfer.files[0])}});
+function show(f){const r=new FileReader();r.onload=e=>{document.getElementById('imgPreview').src=e.target.result;document.getElementById('previewWrap').style.display='block';document.getElementById('uploadText').textContent=f.name;document.getElementById('uploadIcon').className='bi bi-check-circle-fill';document.getElementById('uploadIcon').style.color='var(--c-clear)'};r.readAsDataURL(f)}
+function clearImg(){fi.value='';document.getElementById('previewWrap').style.display='none';document.getElementById('uploadText').textContent='Click or drag to upload';document.getElementById('uploadIcon').className='bi bi-cloud-upload';document.getElementById('uploadIcon').style.color='var(--ua-muted)'}
+</script>
+{% endblock %}

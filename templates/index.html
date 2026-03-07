@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}Home — Union Assurance Sanction Screening{% endblock %}
+{% block breadcrumb %}<li><span class="current">Home</span></li>{% endblock %}
+
+{% block extra_style %}
+<style>
+.hero { background:linear-gradient(135deg,var(--ua-navy) 0%,var(--ua-navy-3) 100%); border-radius:14px; padding:48px 40px; position:relative; overflow:hidden; }
+.hero::after { content:''; position:absolute; right:-80px; top:-80px; width:320px; height:320px; background:rgba(232,99,10,.08); border-radius:50%; border:1px solid rgba(232,99,10,.1); }
+.hero-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(232,99,10,.12); border:1px solid rgba(232,99,10,.25); color:var(--ua-orange); font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; border-radius:16px; margin-bottom:18px; }
+.hero h1 { color:#fff; font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:800; line-height:1.2; margin:0 0 14px; }
+.hero h1 span { color:var(--ua-orange); }
+.hero p { color:rgba(255,255,255,.55); font-size:.92rem; line-height:1.7; max-width:480px; margin:0 0 28px; }
+.hero-stats { display:flex; gap:28px; flex-wrap:wrap; margin-top:32px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); }
+.hero-stat .v { color:#fff; font-size:1.5rem; font-weight:800; }
+.hero-stat .l { color:rgba(255,255,255,.4); font-size:.65rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; }
+.hero-feed { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; }
+.feed-hdr { font-size:.65rem; color:rgba(255,255,255,.35); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; }
+.feed-row { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:6px; margin-bottom:6px; background:rgba(255,255,255,.03); font-size:.8rem; color:rgba(255,255,255,.7); }
+.feed-row:last-of-type { margin-bottom:0; }
+.dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.quick-card { border-radius:var(--ua-radius); padding:24px; text-align:center; text-decoration:none; display:block; transition:transform .15s, box-shadow .15s; height:100%; color:var(--ua-text); }
+.quick-card:hover { transform:translateY(-3px); box-shadow:var(--ua-shadow-lg); color:var(--ua-text); }
+.qc-icon { width:48px; height:48px; border-radius:12px; margin:0 auto 14px; display:grid; place-items:center; font-size:1.3rem; }
+.feat-card { border-radius:var(--ua-radius); padding:24px; height:100%; transition:transform .15s; }
+.feat-card:hover { transform:translateY(-2px); }
+.feat-icon { width:44px; height:44px; border-radius:12px; display:grid; place-items:center; font-size:1.2rem; margin-bottom:14px; }
+.step-row { display:flex; gap:16px; margin-bottom:22px; position:relative; }
+.step-row:not(:last-child)::before { content:''; position:absolute; left:19px; top:44px; bottom:-6px; width:2px; background:linear-gradient(to bottom,rgba(232,99,10,.3),transparent); }
+.step-num { width:40px; height:40px; border-radius:10px; background:var(--ua-navy); color:var(--ua-orange); font-size:.95rem; font-weight:800; display:grid; place-items:center; flex-shrink:0; border:2px solid rgba(232,99,10,.2); }
+.comp-strip { display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:14px; padding:18px 24px; border-radius:var(--ua-radius); }
+.comp-item { display:flex; align-items:center; gap:8px; }
+.comp-icon { width:36px; height:36px; border-radius:8px; display:grid; place-items:center; font-size:1rem; }
+.feat-icon-1 { background:var(--ua-orange-glow); color:var(--ua-orange); }
+.feat-icon-2 { background:var(--c-face-bg); color:var(--c-face); }
+.feat-icon-3 { background:var(--c-info-bg); color:var(--c-info); }
+.feat-icon-4 { background:var(--c-clear-bg); color:var(--c-clear); }
+.comp-icon-1 { background:var(--ua-orange-glow); color:var(--ua-orange); }
+.comp-icon-2 { background:var(--c-clear-bg); color:var(--c-clear); }
+.comp-icon-3 { background:var(--c-info-bg); color:var(--c-info); }
+.comp-icon-4 { background:rgba(12,27,51,.06); color:var(--ua-navy); }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Status Banner -->
+<div style="background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3));border-radius:var(--ua-radius);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.4);animation:pulse 2s infinite;"></span>
+    <span style="font-size:.82rem;color:rgba(255,255,255,.6);"><strong style="color:#fff;">All Systems Operational</strong> — Lists: UN, OFAC, EU, LKFIU</span>
+    <span class="ms-auto d-none d-md-inline" style="font-size:.68rem;color:var(--ua-orange);font-weight:600;">Powered by UA AI Engine</span>
+</div>
+<style>@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}</style>
+
+<!-- Hero -->
+<div class="hero mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-6" style="position:relative;z-index:1;">
+            <div class="hero-pill"><i class="bi bi-shield-lock-fill"></i>AML / CFT Compliance</div>
+            <h1>Intelligent<br><span>Sanction Screening</span><br>for Union Assurance</h1>
+            <p>Real-time name matching, facial recognition, and multi-dimensional risk scoring against global sanctions lists.</p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="/submit" class="btn-ua" style="padding:12px 24px;font-size:.92rem;box-shadow:0 4px 16px rgba(232,99,10,.3);"><i class="bi bi-person-plus-fill me-2"></i>Screen a Customer</a>
+                <a href="/reports" class="btn-ua-outline" style="padding:12px 24px;color:#fff;border-color:rgba(255,255,255,.2);"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="v">100K+</div><div class="l">Screened</div></div>
+                <div class="hero-stat"><div class="v">5</div><div class="l">Lists</div></div>
+                <div class="hero-stat"><div class="v">&lt;2s</div><div class="l">Response</div></div>
+                <div class="hero-stat"><div class="v">99.9%</div><div class="l">Uptime</div></div>
+            </div>
+        </div>
+        <div class="col-lg-5 offset-lg-1 mt-4 mt-lg-0" style="position:relative;z-index:1;">
+            <div class="hero-feed">
+                <div class="feed-hdr"><i class="bi bi-activity me-1" style="color:var(--ua-orange);"></i>Live Screening Feed</div>
+                <div class="feed-row"><span class="dot" style="background:var(--c-hit);"></span><span style="flex:1;">Amir Hassan Al-Rashidi</span><span class="ua-badge badge-hit">HIT</span></div>
+                <div class="feed-row"><span class="dot" style="background:var(--c-review);"></span><span style="flex:1;">Priya Nair Subramaniam</span><span class="ua-badge badge-review">REVIEW</span></div>
+                <div class="feed-row"><span class="dot" style="background:var(--c-face);"></span><span style="flex:1;">Mohamed Farouq</span><span class="ua-badge badge-face-hit">FACE HIT</span></div>
+                <div class="feed-row"><span class="dot" style="background:var(--c-clear);"></span><span style="flex:1;">Nimal Perera</span><span class="ua-badge badge-clear">CLEAR</span></div>
+                <div class="feed-row"><span class="dot" style="background:var(--c-clear);"></span><span style="flex:1;">Sanduni Jayawardena</span><span class="ua-badge badge-clear">CLEAR</span></div>
+                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;">
+                    <span style="font-size:.7rem;color:rgba(255,255,255,.3);">Updated 3s ago</span>
+                    <a href="/reports" style="font-size:.7rem;color:var(--ua-orange);text-decoration:none;font-weight:600;">View all →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-3 mb-5">
+    <div class="col-md-4">
+        <a href="/submit" class="ua-card quick-card">
+            <div class="qc-icon" style="background:var(--ua-orange-glow);color:var(--ua-orange);"><i class="bi bi-person-plus-fill"></i></div>
+            <h6 style="font-weight:700;">Submit Customer</h6>
+            <p style="font-size:.8rem;color:var(--ua-muted);margin:0;">Run an instant AML/CFT sanction check with face matching.</p>
+            <div style="margin-top:12px;font-size:.78rem;color:var(--ua-orange);font-weight:600;">Start screening →</div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="/reports" class="ua-card quick-card">
+            <div class="qc-icon" style="background:rgba(12,27,51,.06);color:var(--ua-navy);"><i class="bi bi-clipboard-data-fill"></i></div>
+            <h6 style="font-weight:700;">View Reports</h6>
+            <p style="font-size:.8rem;color:var(--ua-muted);margin:0;">Browse results, filter by status, and review risk breakdowns.</p>
+            <div style="margin-top:12px;font-size:.78rem;color:var(--ua-navy);font-weight:600;">Open reports →</div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <div class="ua-card quick-card" style="cursor:default;">
+            <div class="qc-icon" style="background:var(--c-clear-bg);color:var(--c-clear);"><i class="bi bi-bar-chart-fill"></i></div>
+            <h6 style="font-weight:700;">Analytics</h6>
+            <p style="font-size:.8rem;color:var(--ua-muted);margin:0;">Dashboard insights on hit rates, trends, and volumes.</p>
+            <div style="margin-top:12px;font-size:.78rem;color:var(--ua-muted);font-weight:600;">Coming soon</div>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="text-center mb-4">
+    <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;">Capabilities</div>
+    <h3 style="font-weight:800;font-size:1.4rem;">Everything for AML/CFT compliance</h3>
+    <p style="font-size:.85rem;color:var(--ua-muted);max-width:500px;margin:6px auto 0;">AI-powered screening engine tailored for Sri Lankan insurance operations.</p>
+</div>
+<div class="row g-3 mb-5">
+    {% for icon, title, desc, bg, clr in [
+        ('bi-fonts','Name Matching','Fuzzy, phonetic & transliteration matching across UN, OFAC, EU, LKFIU.','var(--ua-orange-glow)','var(--ua-orange)'),
+        ('bi-person-bounding-box','Face Recognition','AI biometric comparison against watchlist photos with confidence scoring.','var(--c-face-bg)','var(--c-face)'),
+        ('bi-shield-shaded','Multi-Factor Risk','Combines name, DOB, nationality, ID & face into a weighted score.','var(--c-info-bg)','var(--c-info)'),
+        ('bi-lightning-charge-fill','Real-Time Results','Sub-2-second screening with instant reports and audit trails.','var(--c-clear-bg)','var(--c-clear)')
+    ] %}
+    <div class="col-md-6 col-lg-3">
+        <div class="ua-card feat-card">
+            <div class="feat-icon feat-icon-{{ loop.index }}"><i class="bi {{ icon }}"></i></div>
+            <h6 style="font-weight:700;font-size:.92rem;margin-bottom:6px;">{{ title }}</h6>
+            <p style="font-size:.8rem;color:var(--ua-muted);line-height:1.6;margin:0;">{{ desc }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Workflow + Lists -->
+<div class="row g-4 mb-5">
+    <div class="col-lg-6">
+        <div class="ua-card p-4 h-100">
+            <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;"><i class="bi bi-diagram-3 me-1"></i>Workflow</div>
+            <h5 style="font-weight:800;margin-bottom:20px;">How it works</h5>
+            {% for n, t, d in [('1','Submit Details','Enter name, NIC, nationality, DOB and upload a face photo.'),('2','AI Screening','Fuzzy name matching, facial recognition & attribute cross-checking.'),('3','Risk Scoring','Signals combined into a single score: HIT, REVIEW or CLEAR.'),('4','Review & Act','View the report, review evidence, take compliance action.')] %}
+            <div class="step-row">
+                <div class="step-num">{{ n }}</div>
+                <div style="padding-top:6px;">
+                    <h6 style="font-weight:700;font-size:.88rem;margin:0 0 3px;">{{ t }}</h6>
+                    <p style="font-size:.8rem;color:var(--ua-muted);margin:0;line-height:1.5;">{{ d }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ua-card p-4 h-100">
+            <div style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;"><i class="bi bi-patch-check me-1"></i>Coverage</div>
+            <h5 style="font-weight:800;margin-bottom:20px;">Sanctions lists monitored</h5>
+            {% for name, icon, desc in [('UN Security Council','bi-globe','Consolidated UN Sanctions'),('OFAC (US Treasury)','bi-bank','SDN & Consolidated Lists'),('EU Restrictive Measures','bi-flag','EU Financial Sanctions'),('LKFIU (Sri Lanka)','bi-building','Local Designated Persons'),('Interpol Notices','bi-shield-exclamation','Red & Blue Notices')] %}
+            <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-2" style="background:var(--ua-bg);border:1px solid var(--ua-border);">
+                <div style="width:30px;height:30px;border-radius:7px;background:var(--ua-orange-glow);display:grid;place-items:center;color:var(--ua-orange);flex-shrink:0;font-size:.85rem;"><i class="bi {{ icon }}"></i></div>
+                <div style="flex:1;"><div style="font-size:.82rem;font-weight:600;">{{ name }}</div><div style="font-size:.7rem;color:var(--ua-muted);">{{ desc }}</div></div>
+                <span style="font-size:.6rem;background:var(--c-clear-bg);color:var(--c-clear);border:1px solid rgba(5,150,105,.15);padding:2px 7px;border-radius:8px;font-weight:700;">ACTIVE</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Compliance Strip -->
+<div class="ua-card comp-strip mb-2">
+    {% for icon, title, sub, bg, clr in [('bi-award-fill','IRCSL Regulated','Insurance Regulatory Commission','var(--ua-orange-glow)','var(--ua-orange)'),('bi-patch-check-fill','SOC 2 Compliant','Type II certified security','var(--c-clear-bg)','var(--c-clear)'),('bi-lock-fill','AML / CFT','Anti-money laundering','var(--c-info-bg)','var(--c-info)'),('bi-calendar3','Est. 1987','Union Assurance PLC','rgba(12,27,51,.06)','var(--ua-navy)')] %}
+    <div class="comp-item">
+        <div class="comp-icon comp-icon-{{ loop.index }}"><i class="bi {{ icon }}"></i></div>
+        <div><strong style="font-size:.8rem;display:block;">{{ title }}</strong><span style="font-size:.68rem;color:var(--ua-muted);">{{ sub }}</span></div>
+    </div>
+    {% if not loop.last %}<div style="width:1px;height:36px;background:var(--ua-border);" class="d-none d-md-block"></div>{% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
