@@ -6,26 +6,36 @@
     <title>{% block title %}Sanction Screening — Union Assurance{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ua-orange:       #E8630A;
-            --ua-orange-hover: #D45808;
-            --ua-orange-glow:  rgba(232,99,10,.10);
-            --ua-navy:         #0C1B33;
-            --ua-navy-2:       #132743;
-            --ua-navy-3:       #1A3558;
-            --ua-slate:        #334766;
-            --ua-bg:           #F5F6FA;
+            --ua-orange:       #FF5100;
+            --ua-orange-hover: #E84800;
+            --ua-orange-dark:  #CC3D00;
+            --ua-orange-glow:  rgba(255,81,0,.18);
+            --ua-orange-mid:   rgba(255,81,0,.10);
+            --ua-orange-faint: rgba(255,81,0,.05);
+            --ua-orange-tint:  #FFF0EB;
+            --ua-black:        #1A1A1A;
+            --ua-warm-grey:    #4A4441;
+            --ua-bg:           #FFFFFF;
+            --ua-bg-2:         #F8F7F5;
+            --ua-bg-3:         #F2F0ED;
             --ua-card:         #FFFFFF;
-            --ua-border:       #E2E6EF;
-            --ua-text:         #1E293B;
-            --ua-text-2:       #475569;
-            --ua-muted:        #94A3B8;
-            --ua-radius:       10px;
-            --ua-shadow-sm:    0 1px 3px rgba(0,0,0,.06);
-            --ua-shadow:       0 4px 20px rgba(0,0,0,.06);
-            --ua-shadow-lg:    0 8px 36px rgba(0,0,0,.1);
+            --ua-card-hover:   #FAF9F8;
+            --ua-text:         #1A1A1A;
+            --ua-text-2:       #3D3D3D;
+            --ua-muted:        #6B6B6B;
+            --ua-faint:        #9B9B9B;
+            --ua-border:       rgba(0,0,0,.08);
+            --ua-border-str:   rgba(0,0,0,.13);
+            --ua-radius-sm:    12px;
+            --ua-radius-lg:    20px;
+            --ua-radius:       12px;
+            --ua-shadow-sm:    0 1px 4px rgba(0,0,0,.06);
+            --ua-shadow:       0 4px 20px rgba(0,0,0,.09);
+            --ua-shadow-lg:    0 12px 40px rgba(0,0,0,.12);
+            --ua-shadow-xl:    0 24px 64px rgba(0,0,0,.15);
             --c-hit:     #DC2626; --c-hit-bg:     #FEF2F2;
             --c-review:  #D97706; --c-review-bg:  #FFFBEB;
             --c-face:    #7C3AED; --c-face-bg:    #F5F3FF;
@@ -35,27 +45,39 @@
         *, *::before, *::after { box-sizing: border-box; }
         body { font-family:'Inter',system-ui,sans-serif; background:var(--ua-bg); color:var(--ua-text); margin:0; display:flex; flex-direction:column; min-height:100vh; -webkit-font-smoothing:antialiased; }
 
+        /* ═══ TOP BAR ═══ */
+        .ua-topbar { background:var(--ua-orange); height:36px; display:flex; align-items:center; }
+        .ua-topbar-inner { display:flex; align-items:center; gap:16px; width:100%; font-size:.78rem; color:rgba(255,255,255,.93); }
+        .ua-topbar a { color:rgba(255,255,255,.93); text-decoration:none; transition:color .15s; }
+        .ua-topbar a:hover { color:#fff; }
+        .ua-topbar-divider { width:1px; height:14px; background:rgba(255,255,255,.30); flex-shrink:0; }
+        .ua-topbar-pill { border:1px solid rgba(255,255,255,.35); border-radius:10px; padding:1px 8px; font-size:.7rem; font-weight:600; color:#fff; }
+        .ua-topbar-status { display:flex; align-items:center; gap:5px; }
+        .ua-topbar-dot { width:5px; height:5px; border-radius:50%; background:#4ade80; flex-shrink:0; }
+
         /* ═══ NAVBAR ═══ */
-        .ua-nav { background:var(--ua-navy); position:sticky; top:0; z-index:1050; box-shadow:0 2px 12px rgba(0,0,0,.15); }
-        .ua-nav-inner { display:flex; align-items:center; height:68px; gap:0; }
+        .ua-nav { background:#fff; position:sticky; top:0; z-index:1050; border-bottom:1px solid rgba(0,0,0,.07); box-shadow:0 2px 12px rgba(0,0,0,.05); }
+        .ua-nav-inner { display:flex; align-items:center; height:76px; gap:0; }
         .ua-logo { display:flex; align-items:center; gap:12px; text-decoration:none; flex-shrink:0; }
-        .ua-logo-mark { width:38px; height:38px; background:var(--ua-orange); border-radius:9px; display:grid; place-items:center; color:#fff; font-size:1.05rem; }
-        .ua-logo-text { font-weight:700; font-size:1.05rem; color:#fff; line-height:1.15; }
-        .ua-logo-sub { font-size:.72rem; font-weight:600; color:var(--ua-orange); letter-spacing:.06em; text-transform:uppercase; }
-        .ua-sep { width:1px; height:28px; background:rgba(255,255,255,.12); margin:0 24px; }
-        .ua-nav-links { display:flex; align-items:stretch; height:68px; gap:2px; margin-left:auto; }
-        .ua-nav-link { display:flex; align-items:center; gap:7px; padding:0 18px; font-size:.92rem; font-weight:500; color:rgba(255,255,255,.6); text-decoration:none; border-bottom:2.5px solid transparent; transition:all .15s; }
-        .ua-nav-link:hover { color:rgba(255,255,255,.95); background:rgba(255,255,255,.05); }
-        .ua-nav-link.active { color:#fff; border-bottom-color:var(--ua-orange); }
-        .ua-nav-link i { font-size:1.1rem; }
-        .ua-nav-badge { background:var(--ua-orange); color:#fff; font-size:.65rem; font-weight:700; padding:2px 7px; border-radius:8px; margin-left:4px; }
-        .ua-nav-toggle { display:none; background:none; border:none; color:rgba(255,255,255,.7); font-size:1.5rem; padding:8px; cursor:pointer; margin-left:auto; }
+        .ua-logo-mark { width:40px; height:40px; background:var(--ua-orange); border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.1rem; }
+        .ua-logo-text { font-weight:800; font-size:1.05rem; color:var(--ua-black); line-height:1.15; }
+        .ua-logo-sub { font-size:.68rem; font-weight:600; color:var(--ua-orange); letter-spacing:.07em; text-transform:uppercase; }
+        .ua-sep { width:1px; height:28px; background:rgba(0,0,0,.09); margin:0 24px; }
+        .ua-nav-links { display:flex; align-items:stretch; height:76px; gap:2px; margin-left:auto; }
+        .ua-nav-link { display:flex; align-items:center; gap:7px; padding:0 16px; font-size:.9rem; font-weight:500; color:#3D3D3D; text-decoration:none; border-bottom:2.5px solid transparent; transition:all .15s; }
+        .ua-nav-link:hover { color:var(--ua-orange); background:rgba(255,81,0,.05); }
+        .ua-nav-link.active { color:var(--ua-orange); border-bottom-color:var(--ua-orange); font-weight:600; }
+        .ua-nav-link i { font-size:1rem; }
+        .ua-nav-badge { background:var(--ua-orange); color:#fff; font-size:.62rem; font-weight:700; padding:2px 7px; border-radius:8px; margin-left:4px; }
+        .ua-nav-cta { background:var(--ua-orange); color:#fff !important; border-radius:6px; padding:8px 18px !important; font-weight:600 !important; margin-left:8px; border-bottom:none !important; transition:all .15s !important; }
+        .ua-nav-cta:hover { background:var(--ua-orange-hover) !important; box-shadow:0 4px 16px rgba(255,81,0,.40) !important; color:#fff !important; }
+        .ua-nav-toggle { display:none; background:none; border:none; color:var(--ua-black); font-size:1.5rem; padding:8px; cursor:pointer; margin-left:auto; }
 
         /* ═══ BREADCRUMB ═══ */
-        .ua-bread { background:var(--ua-card); border-bottom:1px solid var(--ua-border); padding:8px 0; }
+        .ua-bread { background:var(--ua-bg-2); border-bottom:1px solid var(--ua-border); padding:9px 0; }
         .ua-bread ol { margin:0; padding:0; list-style:none; display:flex; gap:6px; font-size:.82rem; }
         .ua-bread li { display:flex; align-items:center; gap:6px; }
-        .ua-bread li+li::before { content:'/'; color:var(--ua-muted); }
+        .ua-bread li+li::before { content:'/'; color:var(--ua-faint); }
         .ua-bread a { color:var(--ua-orange); text-decoration:none; font-weight:500; }
         .ua-bread .current { color:var(--ua-muted); }
 
@@ -63,18 +85,18 @@
         .ua-card { background:var(--ua-card); border:1px solid var(--ua-border); border-radius:var(--ua-radius); box-shadow:var(--ua-shadow-sm); }
 
         /* ═══ BUTTONS ═══ */
-        .btn-ua { background:var(--ua-orange); color:#fff; border:none; border-radius:8px; font-weight:600; font-size:.9rem; padding:10px 22px; transition:all .15s; }
-        .btn-ua:hover { background:var(--ua-orange-hover); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(232,99,10,.25); }
-        .btn-ua-outline { background:transparent; color:var(--ua-orange); border:1.5px solid var(--ua-orange); border-radius:8px; font-weight:600; font-size:.9rem; padding:9px 22px; transition:all .15s; }
-        .btn-ua-outline:hover { background:var(--ua-orange-glow); color:var(--ua-orange-hover); }
-        .btn-ua-ghost { background:var(--ua-bg); color:var(--ua-text-2); border:1.5px solid var(--ua-border); border-radius:8px; font-weight:500; font-size:.85rem; padding:7px 16px; transition:all .15s; }
+        .btn-ua { background:var(--ua-orange); color:#fff; border:none; border-radius:8px; font-weight:600; font-size:.9rem; padding:10px 22px; transition:all .15s; display:inline-flex; align-items:center; }
+        .btn-ua:hover { background:var(--ua-orange-hover); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(255,81,0,.40); }
+        .btn-ua-outline { background:transparent; color:var(--ua-orange); border:1.5px solid var(--ua-orange); border-radius:8px; font-weight:600; font-size:.9rem; padding:9px 22px; transition:all .15s; display:inline-flex; align-items:center; }
+        .btn-ua-outline:hover { background:var(--ua-orange-faint); color:var(--ua-orange-hover); }
+        .btn-ua-ghost { background:var(--ua-bg-2); color:var(--ua-text-2); border:1.5px solid var(--ua-border-str); border-radius:8px; font-weight:500; font-size:.85rem; padding:7px 16px; transition:all .15s; display:inline-flex; align-items:center; }
         .btn-ua-ghost:hover { border-color:var(--ua-orange); color:var(--ua-orange); }
 
         /* ═══ FORMS ═══ */
-        .ua-label { font-weight:600; font-size:.9rem; color:var(--ua-text); margin-bottom:6px; display:block; }
-        .ua-input { border:1.5px solid var(--ua-border); border-radius:8px; padding:10px 14px; font-size:.92rem; width:100%; transition:border .15s, box-shadow .15s; background:#fff; color:var(--ua-text); }
-        .ua-input:focus { outline:none; border-color:var(--ua-orange); box-shadow:0 0 0 3px var(--ua-orange-glow); }
-        .ua-input::placeholder { color:#8896A8; }
+        .ua-label { font-weight:600; font-size:.88rem; color:var(--ua-black); margin-bottom:6px; display:block; }
+        .ua-input { border:1.5px solid var(--ua-border-str); border-radius:8px; padding:10px 14px; font-size:.92rem; width:100%; transition:border .15s, box-shadow .15s; background:#fff; color:var(--ua-text); }
+        .ua-input:focus { outline:none; border-color:var(--ua-orange); box-shadow:0 0 0 3px rgba(255,81,0,.10); }
+        .ua-input::placeholder { color:#A8A8A8; }
 
         /* ═══ BADGES ═══ */
         .ua-badge { font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:5px; text-transform:uppercase; letter-spacing:.03em; display:inline-block; }
@@ -88,28 +110,45 @@
         .alert { border-radius:var(--ua-radius); font-size:.9rem; border:none; }
 
         /* ═══ FOOTER ═══ */
-        .ua-footer { background:var(--ua-navy); color:rgba(255,255,255,.55); padding:40px 0 0; margin-top:auto; }
-        .ua-footer h6 { color:#fff; font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.08); }
-        .ua-footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:.88rem; transition:color .15s; }
+        .ua-footer { background:var(--ua-black); color:rgba(255,255,255,.55); padding:48px 0 0; margin-top:auto; }
+        .ua-footer h6 { color:#fff; font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.07); }
+        .ua-footer a { color:rgba(255,255,255,.5); text-decoration:none; font-size:.87rem; transition:color .15s; }
         .ua-footer a:hover { color:var(--ua-orange); }
-        .ua-footer-bottom { border-top:1px solid rgba(255,255,255,.07); margin-top:32px; padding:14px 0; font-size:.8rem; color:rgba(255,255,255,.35); }
+        .ua-footer-bottom { border-top:1px solid rgba(255,255,255,.06); margin-top:36px; padding:16px 0; font-size:.79rem; color:rgba(255,255,255,.3); }
 
         /* ═══ MODAL ═══ */
-        .modal-content { border:none; border-radius:12px; overflow:hidden; }
+        .modal-content { border:none; border-radius:14px; overflow:hidden; }
 
         /* ═══ RESPONSIVE ═══ */
         @media(max-width:991px) {
             .ua-sep { display:none; }
             .ua-nav-toggle { display:block; }
-            .ua-nav-links { display:none; flex-direction:column; position:absolute; top:68px; left:0; right:0; background:var(--ua-navy); height:auto; gap:0; padding:8px 0; box-shadow:0 8px 24px rgba(0,0,0,.3); }
+            .ua-nav-links { display:none; flex-direction:column; position:absolute; top:76px; left:0; right:0; background:#fff; height:auto; gap:0; padding:8px 0; box-shadow:0 8px 24px rgba(0,0,0,.12); border-top:1px solid var(--ua-border); }
             .ua-nav-links.open { display:flex; }
-            .ua-nav-link { height:auto; padding:12px 24px; border-bottom:none; border-left:3px solid transparent; }
-            .ua-nav-link.active { border-left-color:var(--ua-orange); border-bottom:none; }
+            .ua-nav-link { height:auto; padding:13px 24px; border-bottom:none; border-left:3px solid transparent; }
+            .ua-nav-link.active { border-left-color:var(--ua-orange); border-bottom:none; background:var(--ua-orange-faint); }
+            .ua-nav-cta { margin:8px 16px; border-radius:8px !important; justify-content:center; }
+            .ua-topbar-inner { flex-wrap:nowrap; overflow:hidden; }
         }
     </style>
     {% block extra_style %}{% endblock %}
 </head>
 <body>
+    <!-- ═══ TOP BAR ═══ -->
+    <div class="ua-topbar">
+        <div class="container ua-topbar-inner">
+            <div class="ua-topbar-status">
+                <span class="ua-topbar-dot"></span>
+                <span>All Systems Operational</span>
+            </div>
+            <span class="ua-topbar-divider"></span>
+            <a href="mailto:compliance@unionassurance.lk"><i class="bi bi-envelope me-1"></i>compliance@unionassurance.lk</a>
+            <span class="ua-topbar-divider d-none d-md-block"></span>
+            <a href="tel:+94112357000" class="d-none d-md-inline"><i class="bi bi-telephone me-1"></i>+94 11 235 7000</a>
+            <span class="ms-auto ua-topbar-pill">IRCSL Regulated</span>
+        </div>
+    </div>
+
     <!-- ═══ NAVBAR ═══ -->
     <nav class="ua-nav">
         <div class="container ua-nav-inner">
@@ -126,8 +165,8 @@
             </button>
             <div class="ua-nav-links">
                 <a class="ua-nav-link {% if request.path == '/' %}active{% endif %}" href="/"><i class="bi bi-house"></i>Home</a>
-                <a class="ua-nav-link {% if request.path == '/submit' %}active{% endif %}" href="/submit"><i class="bi bi-person-plus"></i>Submit</a>
                 <a class="ua-nav-link {% if request.path == '/reports' %}active{% endif %}" href="/reports"><i class="bi bi-clipboard-data"></i>Reports <span class="ua-nav-badge">LIVE</span></a>
+                <a class="ua-nav-link ua-nav-cta {% if request.path == '/submit' %}active{% endif %}" href="/submit"><i class="bi bi-person-plus me-1"></i>Submit Customer</a>
             </div>
         </div>
     </nav>
@@ -163,17 +202,17 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <div class="ua-logo-mark" style="width:30px;height:30px;font-size:.85rem;"><i class="bi bi-shield-lock-fill"></i></div>
+                        <div class="ua-logo-mark" style="width:32px;height:32px;font-size:.9rem;"><i class="bi bi-shield-lock-fill"></i></div>
                         <div>
-                            <div style="color:#fff;font-weight:700;font-size:.95rem;">Union Assurance PLC</div>
-                            <div style="color:var(--ua-orange);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;">Est. 1987 · Colombo, Sri Lanka</div>
+                            <div style="color:#fff;font-weight:800;font-size:.98rem;">Union Assurance PLC</div>
+                            <div style="color:var(--ua-orange);font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;">Est. 1987 · Colombo, Sri Lanka</div>
                         </div>
                     </div>
-                    <p style="font-size:.86rem;line-height:1.7;max-width:300px;">AML/CFT sanction screening platform with AI-powered name matching and facial recognition. IRCSL regulated.</p>
+                    <p style="font-size:.85rem;line-height:1.75;max-width:300px;color:rgba(255,255,255,.5);">AML/CFT sanction screening platform with AI-powered name matching and facial recognition. IRCSL regulated.</p>
                     <div class="d-flex gap-2 flex-wrap mt-3">
-                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-award-fill me-1" style="color:var(--ua-orange);"></i>IRCSL</span>
-                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-patch-check-fill me-1" style="color:var(--ua-orange);"></i>SOC 2</span>
-                        <span style="font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);"><i class="bi bi-lock-fill me-1" style="color:var(--ua-orange);"></i>AML/CFT</span>
+                        <span style="font-size:.7rem;font-weight:700;padding:4px 11px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.5);"><i class="bi bi-award-fill me-1" style="color:var(--ua-orange);"></i>IRCSL</span>
+                        <span style="font-size:.7rem;font-weight:700;padding:4px 11px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.5);"><i class="bi bi-patch-check-fill me-1" style="color:var(--ua-orange);"></i>SOC 2</span>
+                        <span style="font-size:.7rem;font-weight:700;padding:4px 11px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.5);"><i class="bi bi-lock-fill me-1" style="color:var(--ua-orange);"></i>AML/CFT</span>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -199,9 +238,9 @@
                         <a href="mailto:compliance@unionassurance.lk"><i class="bi bi-envelope me-1"></i>compliance@unionassurance.lk</a>
                         <a href="#"><i class="bi bi-geo-alt me-1"></i>20 St Michael's Rd, Colombo 03</a>
                     </div>
-                    <div style="margin-top:16px;background:rgba(232,99,10,.08);border:1px solid rgba(232,99,10,.15);border-radius:8px;padding:10px 12px;">
-                        <span style="font-size:.78rem;color:var(--ua-orange);font-weight:600;"><i class="bi bi-circle-fill me-1" style="font-size:.4rem;"></i>SYSTEM STATUS</span>
-                        <span style="font-size:.82rem;color:rgba(255,255,255,.6);margin-left:8px;">All systems operational <span style="color:#4ade80;font-weight:600;">● Live</span></span>
+                    <div style="margin-top:18px;background:rgba(255,81,0,.08);border:1px solid rgba(255,81,0,.18);border-radius:10px;padding:12px 14px;">
+                        <span style="font-size:.75rem;color:var(--ua-orange);font-weight:700;letter-spacing:.03em;"><i class="bi bi-circle-fill me-1" style="font-size:.4rem;"></i>SYSTEM STATUS</span>
+                        <span style="font-size:.82rem;color:rgba(255,255,255,.5);margin-left:8px;">All systems operational <span style="color:#4ade80;font-weight:700;">● Live</span></span>
                     </div>
                 </div>
             </div>

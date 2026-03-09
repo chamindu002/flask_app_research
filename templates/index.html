@@ -4,79 +4,116 @@
 
 {% block extra_style %}
 <style>
-.hero { background:linear-gradient(135deg,var(--ua-navy) 0%,var(--ua-navy-3) 100%); border-radius:14px; padding:48px 40px; position:relative; overflow:hidden; }
-.hero::after { content:''; position:absolute; right:-80px; top:-80px; width:320px; height:320px; background:rgba(232,99,10,.08); border-radius:50%; border:1px solid rgba(232,99,10,.1); }
-.hero-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(232,99,10,.12); border:1px solid rgba(232,99,10,.25); color:var(--ua-orange); font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:5px 14px; border-radius:16px; margin-bottom:18px; }
-.hero h1 { color:#fff; font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:800; line-height:1.2; margin:0 0 16px; }
-.hero h1 span { color:var(--ua-orange); }
-.hero p { color:rgba(255,255,255,.6); font-size:.95rem; line-height:1.7; max-width:480px; margin:0 0 28px; }
-.hero-stats { display:flex; gap:28px; flex-wrap:wrap; margin-top:32px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); }
-.hero-stat .v { color:#fff; font-size:1.6rem; font-weight:800; }
-.hero-stat .l { color:rgba(255,255,255,.45); font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+/* ═══ HERO ═══ */
+.hero { background:var(--ua-orange); border-radius:var(--ua-radius-lg); padding:56px 48px; position:relative; overflow:hidden; }
+.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size:60px 60px; border-radius:var(--ua-radius-lg); }
+.hero-glow-r { position:absolute; right:-80px; top:-80px; width:380px; height:380px; background:rgba(255,255,255,.08); border-radius:50%; pointer-events:none; }
+.hero-glow-l { position:absolute; left:-60px; bottom:-60px; width:280px; height:280px; background:rgba(0,0,0,.08); border-radius:50%; pointer-events:none; }
+.hero-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); color:#fff; font-size:.73rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:20px; }
+.hero h1 { color:#fff; font-family:'Playfair Display',serif; font-size:clamp(2rem,3.8vw,2.9rem); font-weight:700; line-height:1.18; margin:0 0 16px; }
+.hero h1 em { color:var(--ua-black); font-style:italic; }
+.hero p { color:rgba(255,255,255,.82); font-size:.97rem; line-height:1.75; max-width:500px; margin:0 0 30px; }
+.hero-stats { display:flex; gap:32px; flex-wrap:wrap; margin-top:34px; padding-top:26px; border-top:1px solid rgba(255,255,255,.25); }
+.hero-stat .v { color:#fff; font-size:1.65rem; font-weight:800; line-height:1; }
+.hero-stat .sfx { color:var(--ua-black); font-size:1.3rem; font-weight:800; }
+.hero-stat .l { color:rgba(255,255,255,.70); font-size:.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-top:4px; }
+.hero-stat-div { width:1px; background:rgba(255,255,255,.25); align-self:stretch; }
 
-/* Schedule panel replacing live feed */
-.schedule-panel { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; }
-.sch-hdr { font-size:.75rem; color:rgba(255,255,255,.4); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:14px; }
-.sch-slot { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; margin-bottom:8px; background:rgba(255,255,255,.04); }
+/* Hero button overrides on orange bg */
+.hero .btn-hero-primary { background:#fff; color:var(--ua-orange); border:none; border-radius:8px; font-weight:700; font-size:.92rem; padding:12px 24px; transition:all .15s; display:inline-flex; align-items:center; }
+.hero .btn-hero-primary:hover { background:#F0F0F0; transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,0,0,.15); }
+.hero .btn-hero-secondary { background:rgba(0,0,0,.15); color:#fff; border:1.5px solid rgba(255,255,255,.40); border-radius:8px; font-weight:600; font-size:.92rem; padding:11px 24px; transition:all .15s; display:inline-flex; align-items:center; }
+.hero .btn-hero-secondary:hover { background:rgba(0,0,0,.25); border-color:rgba(255,255,255,.65); }
+
+/* ═══ HERO SCHEDULE PANEL ═══ */
+.schedule-panel { background:rgba(255,255,255,.95); border:1px solid rgba(255,255,255,.50); border-radius:var(--ua-radius-sm); padding:22px; box-shadow:0 4px 24px rgba(0,0,0,.15); backdrop-filter:blur(6px); }
+.sch-hdr { font-size:.73rem; color:var(--ua-muted); font-weight:700; letter-spacing:.07em; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:6px; }
+.sch-hdr i { color:var(--ua-orange); }
+.sch-slot { display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:9px; margin-bottom:8px; background:var(--ua-bg-2); border:1px solid var(--ua-border); }
 .sch-slot:last-of-type { margin-bottom:0; }
-.sch-time { font-size:1rem; font-weight:800; color:#fff; width:52px; flex-shrink:0; }
-.sch-desc { font-size:.85rem; color:rgba(255,255,255,.65); flex:1; }
+.sch-time { font-size:1rem; font-weight:800; color:var(--ua-black); width:54px; flex-shrink:0; }
+.sch-desc { font-size:.83rem; color:var(--ua-muted); flex:1; line-height:1.5; }
 .sch-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.sch-info { margin-top:14px; padding:10px 14px; background:var(--ua-orange-tint); border:1px solid rgba(255,81,0,.12); border-radius:8px; font-size:.81rem; color:var(--ua-warm-grey); line-height:1.6; }
+.sch-footer { margin-top:12px; padding-top:10px; border-top:1px solid var(--ua-border); display:flex; justify-content:space-between; align-items:center; }
+.sch-footer span { font-size:.78rem; color:var(--ua-faint); }
+.sch-footer a { font-size:.78rem; color:var(--ua-orange); font-weight:600; text-decoration:none; }
+.sch-footer a:hover { text-decoration:underline; }
 
-.quick-card { border-radius:var(--ua-radius); padding:24px; text-align:center; text-decoration:none; display:block; transition:transform .15s, box-shadow .15s; height:100%; color:var(--ua-text); }
+/* ═══ STATUS BANNER ═══ */
+.status-banner { background:var(--ua-bg-2); border:1px solid var(--ua-border); border-left:4px solid #4ade80; border-radius:var(--ua-radius-sm); padding:12px 20px; margin-bottom:20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+
+/* ═══ QUICK CARDS ═══ */
+.quick-card { border-radius:var(--ua-radius-sm); padding:24px; text-align:center; text-decoration:none; display:block; transition:transform .15s, box-shadow .15s; height:100%; color:var(--ua-text); border:1px solid var(--ua-border); background:#fff; }
 .quick-card:hover { transform:translateY(-3px); box-shadow:var(--ua-shadow-lg); color:var(--ua-text); }
-.qc-icon { width:48px; height:48px; border-radius:12px; margin:0 auto 14px; display:grid; place-items:center; font-size:1.3rem; }
-.feat-card { border-radius:var(--ua-radius); padding:24px; height:100%; transition:transform .15s; }
-.feat-card:hover { transform:translateY(-2px); }
-.feat-icon { width:44px; height:44px; border-radius:12px; display:grid; place-items:center; font-size:1.2rem; margin-bottom:14px; }
-.step-row { display:flex; gap:16px; margin-bottom:22px; position:relative; }
-.step-row:not(:last-child)::before { content:''; position:absolute; left:19px; top:44px; bottom:-6px; width:2px; background:linear-gradient(to bottom,rgba(232,99,10,.3),transparent); }
-.step-num { width:40px; height:40px; border-radius:10px; background:var(--ua-navy); color:var(--ua-orange); font-size:.95rem; font-weight:800; display:grid; place-items:center; flex-shrink:0; border:2px solid rgba(232,99,10,.2); }
-.comp-strip { display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:14px; padding:18px 24px; border-radius:var(--ua-radius); }
-.comp-item { display:flex; align-items:center; gap:8px; }
-.comp-icon { width:36px; height:36px; border-radius:8px; display:grid; place-items:center; font-size:1rem; }
-.feat-icon-1 { background:var(--ua-orange-glow); color:var(--ua-orange); }
+.qc-icon { width:50px; height:50px; border-radius:13px; margin:0 auto 16px; display:grid; place-items:center; font-size:1.3rem; }
+.qc-arrow { margin-top:14px; font-size:.85rem; font-weight:700; color:var(--ua-orange); }
+
+/* ═══ SECTION TITLES ═══ */
+.sec-eyebrow { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ua-orange); margin-bottom:6px; }
+
+/* ═══ FEATURE CARDS ═══ */
+.feat-card { border-radius:var(--ua-radius-sm); padding:26px; height:100%; transition:transform .15s, box-shadow .15s; background:#fff; border:1px solid var(--ua-border); }
+.feat-card:hover { transform:translateY(-3px); box-shadow:var(--ua-shadow); }
+.feat-icon { width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:1.2rem; margin-bottom:16px; }
+.feat-icon-1 { background:var(--ua-orange-tint); color:var(--ua-orange); }
 .feat-icon-2 { background:var(--c-face-bg); color:var(--c-face); }
 .feat-icon-3 { background:var(--c-info-bg); color:var(--c-info); }
 .feat-icon-4 { background:var(--c-clear-bg); color:var(--c-clear); }
-.comp-icon-1 { background:var(--ua-orange-glow); color:var(--ua-orange); }
+
+/* ═══ WORKFLOW STEPS ═══ */
+.step-row { display:flex; gap:16px; margin-bottom:22px; position:relative; }
+.step-row:not(:last-child)::before { content:''; position:absolute; left:19px; top:44px; bottom:-6px; width:2px; background:linear-gradient(to bottom,rgba(255,81,0,.25),transparent); }
+.step-num { width:40px; height:40px; border-radius:10px; background:var(--ua-orange-tint); color:var(--ua-orange); font-size:.95rem; font-weight:800; display:grid; place-items:center; flex-shrink:0; border:2px solid rgba(255,81,0,.15); }
+
+/* ═══ COMPLIANCE STRIP ═══ */
+.comp-strip { display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:14px; padding:20px 28px; border-radius:var(--ua-radius-sm); background:var(--ua-bg-2); border:1px solid var(--ua-border); }
+.comp-item { display:flex; align-items:center; gap:10px; }
+.comp-icon { width:38px; height:38px; border-radius:9px; display:grid; place-items:center; font-size:1rem; }
+.comp-icon-1 { background:var(--ua-orange-tint); color:var(--ua-orange); }
 .comp-icon-2 { background:var(--c-clear-bg); color:var(--c-clear); }
 .comp-icon-3 { background:var(--c-info-bg); color:var(--c-info); }
-.comp-icon-4 { background:rgba(12,27,51,.06); color:var(--ua-navy); }
+.comp-icon-4 { background:var(--ua-bg-3); color:var(--ua-warm-grey); }
+
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 </style>
 {% endblock %}
 
 {% block content %}
 <!-- Status Banner -->
-<div style="background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3));border-radius:var(--ua-radius);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.4);animation:pulse 2s infinite;"></span>
-    <span style="font-size:.88rem;color:rgba(255,255,255,.6);"><strong style="color:#fff;">All Systems Operational</strong> — Lists: UN, OFAC, EU, LKFIU</span>
-    <span class="ms-auto d-none d-md-inline" style="font-size:.78rem;color:var(--ua-orange);font-weight:600;">Powered by UA AI Engine</span>
+<div class="status-banner">
+    <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse 2s infinite;"></span>
+    <span style="font-size:.88rem;color:var(--ua-text-2);"><strong style="color:var(--ua-black);">All Systems Operational</strong> — Lists: UN, OFAC, EU, LKFIU</span>
+    <span class="ms-auto d-none d-md-inline" style="font-size:.78rem;color:var(--ua-orange);font-weight:700;">Powered by UA AI Engine</span>
 </div>
-<style>@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}</style>
 
 <!-- Hero -->
-<div class="hero mb-4">
+<div class="hero mb-5">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-r"></div>
+    <div class="hero-glow-l"></div>
     <div class="row align-items-center">
         <div class="col-lg-6" style="position:relative;z-index:1;">
             <div class="hero-pill"><i class="bi bi-shield-lock-fill"></i>AML / CFT Compliance</div>
-            <h1>Intelligent<br><span>Sanction Screening</span><br>for Union Assurance</h1>
+            <h1>Intelligent<br><em>Sanction Screening</em><br>for Union Assurance</h1>
             <p>Real-time name matching, facial recognition, and multi-dimensional risk scoring against global sanctions lists.</p>
             <div class="d-flex gap-3 flex-wrap">
-                <a href="/submit" class="btn-ua" style="padding:12px 24px;font-size:.92rem;box-shadow:0 4px 16px rgba(232,99,10,.3);"><i class="bi bi-person-plus-fill me-2"></i>Screen a Customer</a>
-                <a href="/reports" class="btn-ua-outline" style="padding:12px 24px;color:#fff;border-color:rgba(255,255,255,.2);"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
+                <a href="/submit" class="btn-hero-primary"><i class="bi bi-person-plus-fill me-2"></i>Screen a Customer</a>
+                <a href="/reports" class="btn-hero-secondary"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
             </div>
             <div class="hero-stats">
-                <div class="hero-stat"><div class="v">100K+</div><div class="l">Screened</div></div>
+                <div class="hero-stat"><div class="v">100K<span class="sfx">+</span></div><div class="l">Screened</div></div>
+                <div class="hero-stat-div"></div>
                 <div class="hero-stat"><div class="v">5</div><div class="l">Lists</div></div>
-                <div class="hero-stat"><div class="v">&lt;2s</div><div class="l">Response</div></div>
-                <div class="hero-stat"><div class="v">99.9%</div><div class="l">Uptime</div></div>
+                <div class="hero-stat-div"></div>
+                <div class="hero-stat"><div class="v">&lt;2<span class="sfx">s</span></div><div class="l">Response</div></div>
+                <div class="hero-stat-div"></div>
+                <div class="hero-stat"><div class="v">99.9<span class="sfx">%</span></div><div class="l">Uptime</div></div>
             </div>
         </div>
         <div class="col-lg-5 offset-lg-1 mt-4 mt-lg-0" style="position:relative;z-index:1;">
             <div class="schedule-panel">
-                <div class="sch-hdr"><i class="bi bi-clock-history me-1" style="color:var(--ua-orange);"></i>Report Generation Schedule</div>
-
+                <div class="sch-hdr"><i class="bi bi-clock-history"></i>Report Generation Schedule</div>
                 <div class="sch-slot">
                     <span class="sch-dot" style="background:var(--ua-orange);"></span>
                     <span class="sch-time">8:00 AM</span>
@@ -87,15 +124,13 @@
                     <span class="sch-time">3:00 PM</span>
                     <span class="sch-desc">Afternoon batch — all submissions since 8 AM are processed and reports updated.</span>
                 </div>
-
-                <div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06);">
-                    <div style="font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:6px;"><i class="bi bi-info-circle me-1"></i>How it works</div>
-                    <div style="font-size:.83rem;color:rgba(255,255,255,.55);line-height:1.6;">Submit customer details at any time. Our screening engine processes submissions in two daily batches. The Reports dashboard reflects the most recent completed batch.</div>
+                <div class="sch-info">
+                    <strong><i class="bi bi-info-circle me-1" style="color:var(--ua-orange);"></i>How it works</strong><br>
+                    Submit customer details at any time. Our screening engine processes submissions in two daily batches. The Reports dashboard reflects the most recent completed batch.
                 </div>
-
-                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:.78rem;color:rgba(255,255,255,.35);"><i class="bi bi-calendar3 me-1"></i>Next run: <strong style="color:rgba(255,255,255,.55);" id="nextRun">—</strong></span>
-                    <a href="/reports" style="font-size:.78rem;color:var(--ua-orange);text-decoration:none;font-weight:600;">View reports →</a>
+                <div class="sch-footer">
+                    <span><i class="bi bi-calendar3 me-1"></i>Next run: <strong id="nextRun">—</strong></span>
+                    <a href="/reports">View reports →</a>
                 </div>
             </div>
         </div>
@@ -105,49 +140,49 @@
 <!-- Quick Actions -->
 <div class="row g-3 mb-5">
     <div class="col-md-4">
-        <a href="/submit" class="ua-card quick-card">
-            <div class="qc-icon" style="background:var(--ua-orange-glow);color:var(--ua-orange);"><i class="bi bi-person-plus-fill"></i></div>
-            <h6 style="font-weight:700;font-size:1rem;">Submit Customer</h6>
-            <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Run an AML/CFT sanction check — processed in the next scheduled batch.</p>
-            <div style="margin-top:12px;font-size:.85rem;color:var(--ua-orange);font-weight:600;">Start screening →</div>
+        <a href="/submit" class="quick-card">
+            <div class="qc-icon" style="background:var(--ua-orange-tint);color:var(--ua-orange);"><i class="bi bi-person-plus-fill"></i></div>
+            <h6 style="font-weight:700;font-size:1rem;color:var(--ua-black);">Screen a Customer</h6>
+            <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Submit customer details for the next scheduled batch screening run.</p>
+            <div class="qc-arrow">Submit now →</div>
         </a>
     </div>
     <div class="col-md-4">
-        <a href="/reports" class="ua-card quick-card">
-            <div class="qc-icon" style="background:rgba(12,27,51,.06);color:var(--ua-navy);"><i class="bi bi-clipboard-data-fill"></i></div>
-            <h6 style="font-weight:700;font-size:1rem;">View Reports</h6>
+        <a href="/reports" class="quick-card">
+            <div class="qc-icon" style="background:var(--ua-bg-3);color:var(--ua-warm-grey);"><i class="bi bi-clipboard-data-fill"></i></div>
+            <h6 style="font-weight:700;font-size:1rem;color:var(--ua-black);">View Reports</h6>
             <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Browse results, filter by status, and review risk breakdowns.</p>
-            <div style="margin-top:12px;font-size:.85rem;color:var(--ua-navy);font-weight:600;">Open reports →</div>
+            <div class="qc-arrow">Open reports →</div>
         </a>
     </div>
     <div class="col-md-4">
-        <div class="ua-card quick-card" style="cursor:default;">
+        <div class="quick-card" style="cursor:default;">
             <div class="qc-icon" style="background:var(--c-clear-bg);color:var(--c-clear);"><i class="bi bi-bar-chart-fill"></i></div>
-            <h6 style="font-weight:700;font-size:1rem;">Analytics</h6>
+            <h6 style="font-weight:700;font-size:1rem;color:var(--ua-black);">Analytics</h6>
             <p style="font-size:.88rem;color:var(--ua-muted);margin:0;">Dashboard insights on hit rates, trends, and volumes.</p>
-            <div style="margin-top:12px;font-size:.85rem;color:var(--ua-muted);font-weight:600;">Coming soon</div>
+            <div style="margin-top:14px;font-size:.85rem;color:var(--ua-faint);font-weight:600;">Coming soon</div>
         </div>
     </div>
 </div>
 
 <!-- Features -->
 <div class="text-center mb-4">
-    <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;">Capabilities</div>
-    <h3 style="font-weight:800;font-size:1.5rem;">Everything for AML/CFT compliance</h3>
-    <p style="font-size:.92rem;color:var(--ua-muted);max-width:500px;margin:6px auto 0;">AI-powered screening engine tailored for Sri Lankan insurance operations.</p>
+    <div class="sec-eyebrow">Capabilities</div>
+    <h3 style="font-weight:800;font-size:1.55rem;color:var(--ua-black);">Everything for AML/CFT compliance</h3>
+    <p style="font-size:.92rem;color:var(--ua-muted);max-width:500px;margin:8px auto 0;">AI-powered screening engine tailored for Sri Lankan insurance operations.</p>
 </div>
 <div class="row g-3 mb-5">
-    {% for icon, title, desc, bg, clr in [
-        ('bi-fonts','Name Matching','Fuzzy, phonetic & transliteration matching across UN, OFAC, EU, LKFIU.','var(--ua-orange-glow)','var(--ua-orange)'),
-        ('bi-person-bounding-box','Face Recognition','AI biometric comparison against watchlist photos with confidence scoring.','var(--c-face-bg)','var(--c-face)'),
-        ('bi-shield-shaded','Multi-Factor Risk','Combines name, DOB, nationality, ID & face into a weighted score.','var(--c-info-bg)','var(--c-info)'),
-        ('bi-lightning-charge-fill','Real-Time Results','Sub-2-second screening with instant reports and audit trails.','var(--c-clear-bg)','var(--c-clear)')
+    {% for icon, title, desc, idx in [
+        ('bi-fonts','Name Matching','Fuzzy, phonetic & transliteration matching across UN, OFAC, EU, LKFIU.',1),
+        ('bi-person-bounding-box','Face Recognition','AI biometric comparison against watchlist photos with confidence scoring.',2),
+        ('bi-shield-shaded','Multi-Factor Risk','Combines name, DOB, nationality, ID & face into a weighted score.',3),
+        ('bi-lightning-charge-fill','Real-Time Results','Sub-2-second screening with instant reports and audit trails.',4)
     ] %}
     <div class="col-md-6 col-lg-3">
-        <div class="ua-card feat-card">
-            <div class="feat-icon feat-icon-{{ loop.index }}"><i class="bi {{ icon }}"></i></div>
-            <h6 style="font-weight:700;font-size:1rem;margin-bottom:6px;">{{ title }}</h6>
-            <p style="font-size:.88rem;color:var(--ua-muted);line-height:1.6;margin:0;">{{ desc }}</p>
+        <div class="feat-card">
+            <div class="feat-icon feat-icon-{{ idx }}"><i class="bi {{ icon }}"></i></div>
+            <h6 style="font-weight:700;font-size:.98rem;margin-bottom:7px;color:var(--ua-black);">{{ title }}</h6>
+            <p style="font-size:.87rem;color:var(--ua-muted);line-height:1.65;margin:0;">{{ desc }}</p>
         </div>
     </div>
     {% endfor %}
@@ -157,14 +192,14 @@
 <div class="row g-4 mb-5">
     <div class="col-lg-6">
         <div class="ua-card p-4 h-100">
-            <div style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;"><i class="bi bi-diagram-3 me-1"></i>Workflow</div>
-            <h5 style="font-weight:800;font-size:1.15rem;margin-bottom:20px;">How it works</h5>
+            <div class="sec-eyebrow"><i class="bi bi-diagram-3 me-1"></i>Workflow</div>
+            <h5 style="font-weight:800;font-size:1.15rem;margin-bottom:22px;color:var(--ua-black);">How it works</h5>
             {% for n, t, d in [('1','Submit Details','Enter name, NIC, nationality, DOB and upload a face photo.'),('2','Queued for Batch','Submission is stored securely and queued for the next batch run (8 AM or 3 PM).'),('3','AI Screening','Fuzzy name matching, facial recognition & attribute cross-checking runs at batch time.'),('4','Review & Act','Reports update automatically — view risk scores and take compliance action.')] %}
             <div class="step-row">
                 <div class="step-num">{{ n }}</div>
-                <div style="padding-top:6px;">
-                    <h6 style="font-weight:700;font-size:.95rem;margin:0 0 3px;">{{ t }}</h6>
-                    <p style="font-size:.88rem;color:var(--ua-muted);margin:0;line-height:1.5;">{{ d }}</p>
+                <div style="padding-top:7px;">
+                    <h6 style="font-weight:700;font-size:.94rem;margin:0 0 3px;color:var(--ua-black);">{{ t }}</h6>
+                    <p style="font-size:.87rem;color:var(--ua-muted);margin:0;line-height:1.55;">{{ d }}</p>
                 </div>
             </div>
             {% endfor %}
@@ -172,13 +207,16 @@
     </div>
     <div class="col-lg-6">
         <div class="ua-card p-4 h-100">
-            <div style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ua-orange);margin-bottom:6px;"><i class="bi bi-patch-check me-1"></i>Coverage</div>
-            <h5 style="font-weight:800;font-size:1.15rem;margin-bottom:20px;">Sanctions lists monitored</h5>
+            <div class="sec-eyebrow"><i class="bi bi-patch-check me-1"></i>Coverage</div>
+            <h5 style="font-weight:800;font-size:1.15rem;margin-bottom:22px;color:var(--ua-black);">Sanctions lists monitored</h5>
             {% for name, icon, desc in [('UN Security Council','bi-globe','Consolidated UN Sanctions'),('OFAC (US Treasury)','bi-bank','SDN & Consolidated Lists'),('EU Restrictive Measures','bi-flag','EU Financial Sanctions'),('LKFIU (Sri Lanka)','bi-building','Local Designated Persons'),('Interpol Notices','bi-shield-exclamation','Red & Blue Notices')] %}
-            <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-2" style="background:var(--ua-bg);border:1px solid var(--ua-border);">
-                <div style="width:30px;height:30px;border-radius:7px;background:var(--ua-orange-glow);display:grid;place-items:center;color:var(--ua-orange);flex-shrink:0;font-size:.85rem;"><i class="bi {{ icon }}"></i></div>
-                <div style="flex:1;"><div style="font-size:.9rem;font-weight:600;">{{ name }}</div><div style="font-size:.8rem;color:var(--ua-muted);">{{ desc }}</div></div>
-                <span style="font-size:.7rem;background:var(--c-clear-bg);color:var(--c-clear);border:1px solid rgba(5,150,105,.15);padding:3px 8px;border-radius:8px;font-weight:700;">ACTIVE</span>
+            <div class="d-flex align-items-center gap-3 p-2 mb-2 rounded-3" style="background:var(--ua-bg-2);border:1px solid var(--ua-border);">
+                <div style="width:32px;height:32px;border-radius:8px;background:var(--ua-orange-tint);display:grid;place-items:center;color:var(--ua-orange);flex-shrink:0;font-size:.88rem;"><i class="bi {{ icon }}"></i></div>
+                <div style="flex:1;">
+                    <div style="font-size:.9rem;font-weight:600;color:var(--ua-black);">{{ name }}</div>
+                    <div style="font-size:.79rem;color:var(--ua-muted);">{{ desc }}</div>
+                </div>
+                <span style="font-size:.68rem;background:var(--c-clear-bg);color:var(--c-clear);border:1px solid rgba(5,150,105,.15);padding:3px 9px;border-radius:8px;font-weight:700;">ACTIVE</span>
             </div>
             {% endfor %}
         </div>
@@ -186,33 +224,30 @@
 </div>
 
 <!-- Compliance Strip -->
-<div class="ua-card comp-strip mb-2">
-    {% for icon, title, sub, bg, clr in [('bi-award-fill','IRCSL Regulated','Insurance Regulatory Commission','var(--ua-orange-glow)','var(--ua-orange)'),('bi-patch-check-fill','SOC 2 Compliant','Type II certified security','var(--c-clear-bg)','var(--c-clear)'),('bi-lock-fill','AML / CFT','Anti-money laundering','var(--c-info-bg)','var(--c-info)'),('bi-calendar3','Est. 1987','Union Assurance PLC','rgba(12,27,51,.06)','var(--ua-navy)')] %}
+<div class="comp-strip mb-3">
+    {% for icon, title, sub, idx in [('bi-award-fill','IRCSL Regulated','Insurance Regulatory Commission',1),('bi-patch-check-fill','SOC 2 Compliant','Type II certified security',2),('bi-lock-fill','AML / CFT','Anti-money laundering',3),('bi-calendar3','Est. 1987','Union Assurance PLC',4)] %}
     <div class="comp-item">
-        <div class="comp-icon comp-icon-{{ loop.index }}"><i class="bi {{ icon }}"></i></div>
-        <div><strong style="font-size:.88rem;display:block;">{{ title }}</strong><span style="font-size:.78rem;color:var(--ua-muted);">{{ sub }}</span></div>
+        <div class="comp-icon comp-icon-{{ idx }}"><i class="bi {{ icon }}"></i></div>
+        <div>
+            <strong style="font-size:.87rem;display:block;color:var(--ua-black);">{{ title }}</strong>
+            <span style="font-size:.77rem;color:var(--ua-muted);">{{ sub }}</span>
+        </div>
     </div>
-    {% if not loop.last %}<div style="width:1px;height:36px;background:var(--ua-border);" class="d-none d-md-block"></div>{% endif %}
+    {% if not loop.last %}<div style="width:1px;height:38px;background:var(--ua-border);" class="d-none d-md-block"></div>{% endif %}
     {% endfor %}
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-// Compute next scheduled batch run (08:00 or 15:00 Sri Lanka time)
 (function(){
     const now = new Date();
-    // Use Asia/Colombo UTC+5:30
     const slTime = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Colombo'}));
     const h = slTime.getHours(), m = slTime.getMinutes();
     let label = '';
-    if(h < 8 || (h === 8 && m === 0)){
-        label = 'Today 8:00 AM';
-    } else if(h < 15 || (h === 15 && m === 0)){
-        label = 'Today 3:00 PM';
-    } else {
-        label = 'Tomorrow 8:00 AM';
-    }
+    if(h < 8 || (h === 8 && m === 0)){ label = 'Today 8:00 AM'; }
+    else if(h < 15 || (h === 15 && m === 0)){ label = 'Today 3:00 PM'; }
+    else { label = 'Tomorrow 8:00 AM'; }
     const el = document.getElementById('nextRun');
     if(el) el.textContent = label;
 })();

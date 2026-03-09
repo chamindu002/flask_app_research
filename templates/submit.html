@@ -4,50 +4,62 @@
 
 {% block extra_style %}
 <style>
-.page-hdr { background:linear-gradient(135deg,var(--ua-navy),var(--ua-navy-3)); border-radius:var(--ua-radius); padding:22px 28px; margin-bottom:24px; display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; }
-.page-hdr::after { content:''; position:absolute; right:-40px; top:-40px; width:180px; height:180px; background:rgba(232,99,10,.08); border-radius:50%; }
-.page-hdr h4 { color:#fff; font-weight:700; font-size:1.25rem; margin:0; }
-.page-hdr p { color:rgba(255,255,255,.55); font-size:.9rem; margin:4px 0 0; }
-.page-hdr-icon { width:42px; height:42px; background:var(--ua-orange); border-radius:10px; display:grid; place-items:center; color:#fff; font-size:1.15rem; flex-shrink:0; z-index:1; }
-.section-label { font-size:.9rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ua-orange); border-bottom:2px solid var(--ua-border); padding-bottom:10px; margin-bottom:20px; }
-.upload-zone { border:2px dashed var(--ua-border); border-radius:10px; background:var(--ua-bg); padding:24px; text-align:center; cursor:pointer; transition:all .15s; }
-.upload-zone:hover, .upload-zone.over { border-color:var(--ua-orange); background:var(--ua-orange-glow); }
-.upload-zone i { font-size:2rem; color:var(--ua-muted); }
+.page-hdr { background:var(--ua-orange); border-radius:var(--ua-radius-lg); padding:28px 36px; margin-bottom:28px; display:flex; align-items:center; gap:16px; position:relative; overflow:hidden; }
+.page-hdr-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size:60px 60px; border-radius:var(--ua-radius-lg); }
+.page-hdr-glow { position:absolute; right:-60px; top:-60px; width:220px; height:220px; background:rgba(255,255,255,.08); border-radius:50%; pointer-events:none; }
+.page-hdr h4 { color:#fff; font-weight:800; font-size:1.3rem; margin:0; font-family:'Playfair Display',serif; }
+.page-hdr p { color:rgba(255,255,255,.78); font-size:.88rem; margin:5px 0 0; }
+.page-hdr-icon { width:46px; height:46px; background:rgba(255,255,255,.20); border-radius:12px; display:grid; place-items:center; color:#fff; font-size:1.2rem; flex-shrink:0; z-index:1; border:1.5px solid rgba(255,255,255,.30); }
+
+.section-label { font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ua-orange); border-bottom:2px solid var(--ua-border); padding-bottom:10px; margin-bottom:20px; display:flex; align-items:center; gap:6px; }
+
+.upload-zone { border:2px dashed var(--ua-border-str); border-radius:var(--ua-radius-sm); background:var(--ua-bg-2); padding:28px; text-align:center; cursor:pointer; transition:all .15s; }
+.upload-zone:hover, .upload-zone.over { border-color:var(--ua-orange); background:var(--ua-orange-tint); }
+.upload-zone i { font-size:2.2rem; color:var(--ua-faint); }
 .upload-zone.over i { color:var(--ua-orange); }
-.info-block { background:linear-gradient(135deg,#F0F4FF,var(--ua-bg)); border:1px solid var(--ua-border); border-radius:var(--ua-radius); padding:16px; }
+
+.info-block { background:var(--ua-bg-2); border:1px solid var(--ua-border); border-radius:var(--ua-radius-sm); padding:16px; }
 .info-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
 .info-row:last-child { margin:0; }
-.info-icon { width:30px; height:30px; border-radius:8px; background:var(--ua-orange-glow); display:grid; place-items:center; color:var(--ua-orange); flex-shrink:0; font-size:.85rem; }
-.batch-notice { background:linear-gradient(135deg,#F0F4FF,var(--ua-bg)); border:1.5px solid var(--ua-border); border-left:4px solid var(--ua-orange); border-radius:var(--ua-radius); padding:14px 16px; }
-.batch-slot { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:7px; margin-bottom:6px; border:1px solid var(--ua-border); background:#fff; }
+.info-icon { width:32px; height:32px; border-radius:8px; background:var(--ua-orange-tint); display:grid; place-items:center; color:var(--ua-orange); flex-shrink:0; font-size:.85rem; }
+
+.batch-notice { background:var(--ua-orange-tint); border:1.5px solid rgba(255,81,0,.15); border-left:4px solid var(--ua-orange); border-radius:var(--ua-radius-sm); padding:14px 18px; }
+.batch-slot { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; margin-bottom:6px; border:1px solid var(--ua-border); background:#fff; }
 .batch-slot:last-child { margin-bottom:0; }
-.bs-time { font-size:.95rem; font-weight:800; color:var(--ua-navy); width:56px; flex-shrink:0; }
-.bs-desc { font-size:.82rem; color:var(--ua-text-2); flex:1; }
-.bs-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.bs-time { font-size:.95rem; font-weight:800; color:var(--ua-black); width:58px; flex-shrink:0; }
+.bs-desc { font-size:.82rem; color:var(--ua-muted); flex:1; }
+.bs-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+.sidebar-card-title { font-size:.82rem; font-weight:700; color:var(--ua-black); text-transform:uppercase; letter-spacing:.05em; margin-bottom:16px; display:flex; align-items:center; gap:6px; }
+.sidebar-card-title i { color:var(--ua-orange); }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-hdr">
+    <div class="page-hdr-grid"></div>
+    <div class="page-hdr-glow"></div>
     <div class="page-hdr-icon"><i class="bi bi-person-plus-fill"></i></div>
-    <div style="z-index:1;"><h4>Submit Customer for Screening</h4><p>Details are stored securely and processed in the next scheduled batch run</p></div>
+    <div style="z-index:1;">
+        <h4>Submit Customer for Screening</h4>
+        <p>Details are stored securely and processed in the next scheduled batch run</p>
+    </div>
 </div>
 
 <div class="row g-4">
     <!-- Form -->
     <div class="col-lg-8">
         <div class="ua-card p-4">
-            <!-- Batch info banner inside form area -->
             <div class="batch-notice mb-4 d-flex align-items-start gap-3">
                 <i class="bi bi-clock-fill" style="color:var(--ua-orange);font-size:1.1rem;margin-top:2px;flex-shrink:0;"></i>
                 <div>
-                    <div style="font-weight:700;font-size:.9rem;color:var(--ua-text);margin-bottom:2px;">Submissions are processed twice daily</div>
-                    <div style="font-size:.85rem;color:var(--ua-text-2);line-height:1.6;">Your submission will be stored and included in the <strong>next batch run at 8:00 AM or 3:00 PM</strong>. Results will appear in the Reports dashboard after the batch completes.</div>
+                    <div style="font-weight:700;font-size:.9rem;color:var(--ua-black);margin-bottom:2px;">Submissions are processed twice daily</div>
+                    <div style="font-size:.84rem;color:var(--ua-warm-grey);line-height:1.6;">Your submission will be stored and included in the <strong>next batch run at 8:00 AM or 3:00 PM</strong>. Results will appear in the Reports dashboard after the batch completes.</div>
                 </div>
             </div>
 
             <form method="POST" enctype="multipart/form-data">
-                <div class="section-label"><i class="bi bi-person me-1"></i>Personal Information</div>
+                <div class="section-label"><i class="bi bi-person"></i>Personal Information</div>
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label class="ua-label">Full Name <span style="color:var(--ua-orange);">*</span></label>
@@ -75,29 +87,29 @@
                     </div>
                 </div>
 
-                <div class="section-label"><i class="bi bi-journal-text me-1"></i>Additional</div>
+                <div class="section-label"><i class="bi bi-journal-text"></i>Additional</div>
                 <div class="mb-4">
                     <label class="ua-label">Notes</label>
                     <textarea name="note" class="ua-input" rows="2" placeholder="Additional context..."></textarea>
                 </div>
 
-                <div class="section-label"><i class="bi bi-camera me-1"></i>Face Photo</div>
+                <div class="section-label"><i class="bi bi-camera"></i>Face Photo</div>
                 <div class="mb-4">
                     <div class="upload-zone" id="dropZone" onclick="document.getElementById('imgInput').click()">
                         <i class="bi bi-cloud-upload" id="uploadIcon"></i>
-                        <div style="font-size:.95rem;font-weight:600;color:var(--ua-text-2);margin-top:6px;" id="uploadText">Click or drag to upload</div>
-                        <div style="font-size:.82rem;color:var(--ua-muted);margin-top:3px;">JPG / PNG — clear face photo</div>
+                        <div style="font-size:.95rem;font-weight:600;color:var(--ua-text-2);margin-top:8px;" id="uploadText">Click or drag to upload</div>
+                        <div style="font-size:.82rem;color:var(--ua-faint);margin-top:4px;">JPG / PNG — clear face photo</div>
                         <input type="file" name="image" id="imgInput" class="d-none" accept="image/jpeg,image/png,image/jpg">
                     </div>
                     <div class="text-center mt-3" id="previewWrap" style="display:none;">
-                        <img id="imgPreview" style="max-height:160px;border-radius:10px;border:2px solid var(--ua-border);">
-                        <div class="mt-2"><button type="button" class="btn btn-sm btn-ua-ghost" onclick="clearImg()"><i class="bi bi-trash me-1"></i>Remove</button></div>
+                        <img id="imgPreview" style="max-height:160px;border-radius:12px;border:2px solid var(--ua-border-str);">
+                        <div class="mt-2"><button type="button" class="btn-ua-ghost" onclick="clearImg()"><i class="bi bi-trash me-1"></i>Remove</button></div>
                     </div>
                 </div>
 
                 <div class="d-flex gap-3 flex-wrap">
-                    <button type="submit" class="btn-ua" style="padding:11px 28px;font-size:.9rem;box-shadow:0 4px 16px rgba(232,99,10,.25);"><i class="bi bi-send-fill me-2"></i>Submit</button>
-                    <a href="/reports" class="btn-ua-outline" style="padding:11px 24px;"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
+                    <button type="submit" class="btn-ua" style="padding:12px 30px;font-size:.9rem;box-shadow:0 4px 16px rgba(255,81,0,.30);"><i class="bi bi-send-fill me-2"></i>Submit</button>
+                    <a href="/reports" class="btn-ua-outline" style="padding:12px 24px;"><i class="bi bi-clipboard-data me-2"></i>View Reports</a>
                 </div>
             </form>
         </div>
@@ -107,7 +119,7 @@
     <div class="col-lg-4">
         <!-- Batch Schedule Card -->
         <div class="ua-card p-4 mb-3">
-            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-calendar-check-fill me-1" style="color:var(--ua-orange);"></i>Batch Schedule</h6>
+            <div class="sidebar-card-title"><i class="bi bi-calendar-check-fill"></i>Batch Schedule</div>
             <div class="batch-slot">
                 <span class="bs-dot" style="background:var(--ua-orange);"></span>
                 <span class="bs-time">8:00 AM</span>
@@ -118,8 +130,8 @@
                 <span class="bs-time">3:00 PM</span>
                 <span class="bs-desc">Afternoon run — submissions since 8 AM</span>
             </div>
-            <div style="margin-top:12px;font-size:.8rem;color:var(--ua-muted);line-height:1.6;padding:10px;background:var(--ua-bg);border-radius:8px;border:1px solid var(--ua-border);">
-                <i class="bi bi-info-circle me-1"></i>Reports update automatically after each batch. You do not need to stay on this page.
+            <div style="margin-top:12px;font-size:.8rem;color:var(--ua-muted);line-height:1.6;padding:10px 12px;background:var(--ua-bg-2);border-radius:8px;border:1px solid var(--ua-border);">
+                <i class="bi bi-info-circle me-1" style="color:var(--ua-orange);"></i>Reports update automatically after each batch. You do not need to stay on this page.
             </div>
             <div style="margin-top:10px;font-size:.82rem;color:var(--ua-text-2);font-weight:500;">
                 <i class="bi bi-arrow-right-circle me-1" style="color:var(--ua-orange);"></i>Next batch: <strong id="nextBatch">—</strong>
@@ -128,12 +140,15 @@
 
         <!-- How It Works -->
         <div class="ua-card p-4 mb-3">
-            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-info-circle-fill me-1" style="color:var(--ua-orange);"></i>How It Works</h6>
+            <div class="sidebar-card-title"><i class="bi bi-info-circle-fill"></i>How It Works</div>
             <div class="info-block">
                 {% for icon, title, desc in [('bi-send','1. Submit','Details stored securely in the database'),('bi-clock','2. Batch Run','AI screening runs at 8 AM & 3 PM daily'),('bi-fonts','3. Name Matching','Fuzzy & phonetic matching against sanctions lists'),('bi-person-bounding-box','4. Face Recognition','AI facial comparison against watchlist photos'),('bi-bar-chart-steps','5. Risk Scoring','Name, DOB, ID & face signals combined'),('bi-clipboard-data','6. View Report','Results appear in Reports after batch completes')] %}
                 <div class="info-row">
                     <div class="info-icon"><i class="bi {{ icon }}"></i></div>
-                    <div><strong style="font-size:.88rem;display:block;">{{ title }}</strong><span style="font-size:.82rem;color:var(--ua-muted);">{{ desc }}</span></div>
+                    <div>
+                        <strong style="font-size:.87rem;display:block;color:var(--ua-black);">{{ title }}</strong>
+                        <span style="font-size:.81rem;color:var(--ua-muted);">{{ desc }}</span>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -141,12 +156,12 @@
 
         <!-- Status Key -->
         <div class="ua-card p-4">
-            <h6 style="font-size:.95rem;font-weight:700;color:var(--ua-navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;"><i class="bi bi-tags-fill me-1" style="color:var(--ua-orange);"></i>Status Key</h6>
+            <div class="sidebar-card-title"><i class="bi bi-tags-fill"></i>Status Key</div>
             <div class="d-flex flex-column gap-2">
                 {% for cls, label, desc in [('badge-hit','HIGH HIT','Escalate immediately'),('badge-hit','HIT','Confirmed sanctions match'),('badge-review','REVIEW','Manual review required'),('badge-face-hit','FACE HIT','Face recognition match'),('badge-face-review','FACE REVIEW','Possible face match')] %}
                 <div class="d-flex align-items-center gap-2">
                     <span class="ua-badge {{ cls }}">{{ label }}</span>
-                    <small style="color:var(--ua-text-2);font-size:.86rem;">{{ desc }}</small>
+                    <small style="color:var(--ua-muted);font-size:.85rem;">{{ desc }}</small>
                 </div>
                 {% endfor %}
             </div>
@@ -163,21 +178,16 @@ dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')})
 dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0]){const dt=new DataTransfer();dt.items.add(e.dataTransfer.files[0]);fi.files=dt.files;show(e.dataTransfer.files[0])}});
 function show(f){const r=new FileReader();r.onload=e=>{document.getElementById('imgPreview').src=e.target.result;document.getElementById('previewWrap').style.display='block';document.getElementById('uploadText').textContent=f.name;document.getElementById('uploadIcon').className='bi bi-check-circle-fill';document.getElementById('uploadIcon').style.color='var(--c-clear)'};r.readAsDataURL(f)}
-function clearImg(){fi.value='';document.getElementById('previewWrap').style.display='none';document.getElementById('uploadText').textContent='Click or drag to upload';document.getElementById('uploadIcon').className='bi bi-cloud-upload';document.getElementById('uploadIcon').style.color='var(--ua-muted)'}
+function clearImg(){fi.value='';document.getElementById('previewWrap').style.display='none';document.getElementById('uploadText').textContent='Click or drag to upload';document.getElementById('uploadIcon').className='bi bi-cloud-upload';document.getElementById('uploadIcon').style.color='var(--ua-faint)'}
 
-// Next batch time
 (function(){
     const now = new Date();
     const slTime = new Date(now.toLocaleString('en-US', {timeZone:'Asia/Colombo'}));
     const h = slTime.getHours(), m = slTime.getMinutes();
     let label = '';
-    if(h < 8 || (h === 8 && m === 0)){
-        label = 'Today 8:00 AM';
-    } else if(h < 15 || (h === 15 && m === 0)){
-        label = 'Today 3:00 PM';
-    } else {
-        label = 'Tomorrow 8:00 AM';
-    }
+    if(h < 8 || (h === 8 && m === 0)){ label = 'Today 8:00 AM'; }
+    else if(h < 15 || (h === 15 && m === 0)){ label = 'Today 3:00 PM'; }
+    else { label = 'Tomorrow 8:00 AM'; }
     const el = document.getElementById('nextBatch');
     if(el) el.textContent = label;
 })();
